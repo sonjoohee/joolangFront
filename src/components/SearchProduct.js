@@ -1,7 +1,7 @@
 import {React,useState} from 'react';
 import styled from 'styled-components';
 
-const Products = ({ itemList = [] }) => { // 기본값을 빈 배열로 설정
+const SearchProduct = ({ itemList = [] }) => { // 기본값을 빈 배열로 설정
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 15; // 페이지당 아이템 수
 
@@ -113,4 +113,4 @@ const PageNumber = styled.button`
   font-weight: bold;
 `;
 
-export default Products;
+export default SearchProduct;
