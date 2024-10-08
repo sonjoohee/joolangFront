@@ -60,14 +60,13 @@ export default SearchPage
 
 const Container = styled.div`
   display: flex;
-  position: fixed;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
   padding: 20px;
   width: 100%;
-  margin-top: 250px;
+  margin-top: 15%;
 
 `;
 
