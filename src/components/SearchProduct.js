@@ -1,90 +1,116 @@
-import React, {useState, useEffect} from 'react'
-import { useLocation} from 'react-router-dom';
-import Nav from "../../components/Nav"; 
-import Category from "../../components/Category"; 
-import SearchProduct from "../../components/SearchProduct"; 
+import {React,useState} from 'react';
 import styled from 'styled-components';
-import items from '../../data.js'; // 임의 데이터 파일 import
 
-const SearchPage = () => {
+const Products = ({ itemList = [] }) => { // 기본값을 빈 배열로 설정
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 15; // 페이지당 아이템 수
 
+  const totalPages = Math.ceil(itemList.length / itemsPerPage);
+  const displayedItems = itemList.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
-    const [searchResults, setSearchResults] = useState([]);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
-    const useQuery = () => {
-        return new URLSearchParams(useLocation().search); //현재 경로의 쿼리 문자열 
-      }; //url ?뒤의 파라미터들을 가져옴 
+  return (
+    <RowWrapper>
+      <ItemList>
+        {displayedItems.map((item, index) => (
+          <ItemCard key={index}>
+            <ItemImage src={item.imageUrl} alt={item.title} />
+            <ItemDetails>
+              <ItemTitle>{item.title}</ItemTitle>
+              <ItemLocation>위치 | {item.location}</ItemLocation>
+              <ItemDate>{new Date(item.date).toLocaleDateString()}</ItemDate>
+            </ItemDetails>
+            <Likes>{item.likes} ❤️</Likes>
+          </ItemCard>
+        ))}
+      </ItemList>
+      <Pagination>
+        {Array.from({ length: totalPages }).map((_, pageIndex) => (
+          <PageNumber
+            key={pageIndex}
+            onClick={() => handlePageChange(pageIndex)}
+            active={pageIndex === currentPage}
+          >
+            {pageIndex + 1}
+          </PageNumber>
+        ))}
+      </Pagination>
+    </RowWrapper>
+  );
+};
+const RowWrapper = styled.div`
+  margin: 100px 0;
+`;
 
+const ItemList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 한 줄에 5개 아이템 */
+  gap: 20px; 
+  padding: 10px 0;
+  margin: 40px 0;
+`;
 
-      let query = useQuery();
-      const searchTerm = query.get("q");
+const ItemCard = styled.div`
+  border-radius: 1px;
+  position: relative;
 
-      useEffect(()=> {
-        if (searchTerm) { //만약 searchTerm이 존재한다면 
-            fetchSearchItems(searchTerm);
-        }
-      }, [searchTerm]);
+  &:hover {
+    background-color: #A0DAFB;
+  }
+`;
 
-      const fetchSearchItems = (searchTerm) => {
-        const filteredItems = items.filter(item => // 제목에 검색어가 포함된 아이템 가져왹
-            item.title.toLowerCase().includes(searchTerm.toLowerCase()) 
-            );
-            setSearchResults(filteredItems);
-      };
+const ItemImage = styled.img`
+  width: 220px;
+  height: 240px; 
+  object-fit: cover; 
+`;
 
+const ItemDetails = styled.div`
+  padding: 10px;
+  text-align: left;
+`;
 
-        return (
-            <Container>
-        
-            <Nav/>
-            <Category/>
+const ItemTitle = styled.h3`
+  font-size: 16px;
+  margin: 5px 0;
+`;
 
-            {searchResults.length > 0 ? (
-                <>
-                    <ResultMessage>“{searchResults[0].title}”에 대한 결과</ResultMessage>
-                    <SearchProduct itemList={searchResults} />
-                </>
-            ) : (
-                <NoResults>찾고자하는 검색어 "{searchTerm}"에 맞는 아이템이 없습니다.</NoResults> 
-            )}
-         
-    
-            </Container>
-            
- 
-  )
-}
+const ItemLocation = styled.p`
+  font-size: 14px;
+  color: #777;
+`;
 
-export default SearchPage
+const ItemDate = styled.p`
+  font-size: 12px;
+  color: #aaa;
+`;
 
+const Likes = styled.div`
+  position: absolute;
+  top: 200px;
+  right: 10px;
+  background: rgba(84, 84, 84, 0.4);
+  color: white;
+  border-radius: 33px;
+  padding: 2px 4px;
+`;
 
-const Container = styled.div`
+const Pagination = styled.div`
   display: flex;
-  position: fixed;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  padding: 20px;
-  width: 100%;
-  margin-top: 250px;
-
+  justify-content: center;
+  margin-top: 20px;
 `;
 
-
-const NoResults = styled.p`
-  font-size: 24px;
+const PageNumber = styled.button`
+  color: ${({ active }) => (active ?  '#6AB2E1' : 'black')};
+  margin: 15px 5px;
+  cursor: pointer;
+  border:none;
+  background:none;
   font-weight: bold;
-  color: #777;
-  transform: translateY(-220px); /* 올바른 속성 이름 */
-
-
 `;
 
-
-const ResultMessage = styled.p`
-  font-size: 24px;
-  font-weight: bold;
-  transform: translateY(-220px);
-  color: #777;
-`;
+export default Products;
