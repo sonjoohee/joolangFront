@@ -96,7 +96,7 @@ const Container = styled.div`
   border-radius: 8px;
   width: 80%;
   height:150px;
-  margin-top: 20px;
+  top: 30%;
   
 `;
 
