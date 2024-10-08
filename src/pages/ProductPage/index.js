@@ -35,6 +35,5 @@ const Container = styled.div`
 const Title = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
-  position: absolute;
   top: 23%;
 `;
