@@ -2,6 +2,7 @@ import './App.css';
 import MainPage from "./pages/MainPage";
 import WritePage from "./pages/WritePage";
 import ProductPage from "./pages/ProductPage";
+import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -27,6 +28,7 @@ function App() {
           <Route path="SignupPage" element={<SignupPage />} />
           <Route path="WritePage" element={<WritePage />} />
           <Route path="ProductPage" element={<ProductPage />} />
+          <Route path="SearchPage" element={<SearchPage />} />
       </Route>
       </Routes>
 
