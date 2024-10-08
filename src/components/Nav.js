@@ -12,11 +12,17 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 const Nav = () => {
 
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
 
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+  
 
   const handleAddButtonClick = () => {
-    navigate('/SearchPage'); 
+    navigate(`/SearchPage?q=${searchValue}`); // 검색 입력값을 포함한 URL로 이동
   };
+
 
   const logAddButtonClick = () => {
     navigate('/LoginPage');
@@ -59,7 +65,10 @@ const Nav = () => {
       </>
 
       <SearchContainer>
-        <SearchInput placeholder="찾고 싶은 물품이나 동네를 검색해보세요!" />
+      <SearchInput  
+        value={searchValue} 
+        onChange={handleChange} // 검색 값 변경 시 상태 업데이트
+        placeholder="찾고 싶은 물품이나 동네를 검색해보세요!" />
         <SearchIcon onClick={handleAddButtonClick}><FontAwesomeIcon icon={faSearch} /></SearchIcon>
       </SearchContainer>
 

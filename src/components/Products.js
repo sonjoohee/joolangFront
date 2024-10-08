@@ -54,7 +54,7 @@ const Products = () => {
 
 
 const RowWrapper = styled.div`
-  margin: 60px 0;
+  margin: 100px 0;
 `;
 
 const ItemList = styled.div`
