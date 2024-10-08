@@ -29,7 +29,7 @@ const Container = styled.div`
   height: 100vh;
   padding: 20px;
   width: 100%;
-  margin-top: 380px;
+  margin-top: 35%;
 `;
 
 const Title = styled.h2`
