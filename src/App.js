@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import MainPage from "./pages/MainPage";
 import WritePage from "./pages/WritePage";

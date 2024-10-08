@@ -1,11 +1,25 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const SideBar = () => {
+  return <StyledSideBar></StyledSideBar>;
+};
+
+export default SideBar;
 
 const index = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <Nav />;
+};
 
-export default index
+const StyledSideBar = styled.nav`
+  display: flex;
+  height: auto;
+  margin: 0px;
+  flex-direction: column;
+
+  h3 {
+  display: flex
+  margin: 10px
+  }
+  `;
