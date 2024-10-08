@@ -117,12 +117,12 @@ const Pagination = styled.div`
 `;
 
 const PageNumber = styled.button`
-//   background: ${({ active }) => (active ? '#007bff' : '#fff')};
-//   color: ${({ active }) => (active ? '#fff' : '#007bff')};
+  color: ${({ active }) => (active ?  '#6AB2E1' : 'black')};
   margin: 15px 5px;
   cursor: pointer;
   border:none;
   background:none;
+  font-weight: bold;
 `;
 
 export default Products;
