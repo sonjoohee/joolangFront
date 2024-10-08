@@ -34,6 +34,10 @@ const Nav = () => {
     navigate('/ProductPage'); 
   };
 
+  const myPageClick = () => {
+    navigate('/MyPage');
+  }
+
   const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'Jalnan';
@@ -88,7 +92,7 @@ const Nav = () => {
           <span>장바구니</span>
         </UserIcon>
         <UserIcon className="user">
-          <FontAwesomeIcon icon={regularUser} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+          <FontAwesomeIcon onClick={myPageClick} icon={regularUser} style={{ fontSize: '28px', lineHeight: '1.2' }} />
           <span>마이페이지</span>
         </UserIcon>
       </UserIcons>

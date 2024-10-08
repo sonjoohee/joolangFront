@@ -1,25 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Nav from "../../components/Nav";
+import MyPageSideBar from "../../components/MyPageSideBar";
 
-const SideBar = () => {
-  return <StyledSideBar></StyledSideBar>;
+const MyPage = () => {
+  return (
+    <Container>
+      <Nav />
+      <ContentContainer>
+        <SideBarContainer>
+          <MyPageSideBar />
+        </SideBarContainer>
+      </ContentContainer>
+    </Container>
+  );
 };
 
-export default SideBar;
+export default MyPage;
 
-const index = () => {
-  return <Nav />;
-};
-
-const StyledSideBar = styled.nav`
+const Container = styled.div`
   display: flex;
-  height: auto;
-  margin: 0px;
   flex-direction: column;
+  background-color: white;
+  min-height: 100vh;
+`;
 
-  h3 {
-  display: flex
-  margin: 10px
-  }
-  `;
+const ContentContainer = styled.div`
+  display: flex;
+  flex: 1;
+  height: 100%;
+`;
+
+const SideBarContainer = styled.aside`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  flex-shrink: 0;
+  height: 100%;
+`;

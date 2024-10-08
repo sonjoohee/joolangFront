@@ -5,8 +5,8 @@ import WritePage from "./pages/WritePage";
 import ProductPage from "./pages/ProductPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import MyPage from "./pages/MyPage";
 import { Outlet, Route, Routes } from 'react-router-dom';
-
 
 
 const Layout =() => {
@@ -28,6 +28,7 @@ function App() {
           <Route path="SignupPage" element={<SignupPage />} />
           <Route path="WritePage" element={<WritePage />} />
           <Route path="ProductPage" element={<ProductPage />} />
+          <Route path="MyPage" element={<MyPage />} />
       </Route>
       </Routes>
 
@@ -35,6 +36,6 @@ function App() {
       
     </div>
   );
-}
+};
 
 export default App;
