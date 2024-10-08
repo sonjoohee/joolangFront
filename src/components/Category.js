@@ -94,11 +94,13 @@ const Category = () => {
 const Container = styled.div`
   padding: 20px;
   border-radius: 8px;
-  width: 80%;
+  width: 70%;
   height:150px;
   top: 30%;
+  margin-left:15px;
   
 `;
+
 
 const Title = styled.h2`
   font-size: 20px;
