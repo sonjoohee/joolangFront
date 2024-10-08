@@ -96,14 +96,14 @@ const Container = styled.div`
   border-radius: 8px;
   width: 80%;
   height:150px;
-  margin-top: 60px;
+  margin-top: 20px;
   
 `;
 
 const Title = styled.h2`
   font-size: 20px;
-  position: absolute;
   top: 30%;
+  text-align: left;
 `;
 
 
