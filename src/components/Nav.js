@@ -188,11 +188,12 @@ const SearchIcon = styled.span`
 
 const NavItems = styled.div`
   display: flex;
+  flex-wrap:no-wrap;
   position: absolute;
   top: 75%;
   border-top: solid 1px #D4D4D4;
   width: 100vw;
-   padding: 12px 0;
+  padding: 12px 0;
   justify-content: space-between;
   align-items: center;
   
@@ -206,10 +207,28 @@ const NavItem = styled.div`
   color: #333;
   cursor: pointer;
   font-weight: bold;
+  white-space: nowrap;
 
   &:hover {
     color:#6AB2E1;
   }
+
+  @media (max-width: 1200px) {
+    font-size: 16px; /* 1200px 이하에서 폰트 크기 줄이기 */
+    margin: 0 15px; /* 마진 조정 */
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px; /* 768px 이하에서 폰트 크기 줄이기 */
+    margin: 0 10px; /* 마진 조정 */
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px; /* 480px 이하에서 폰트 크기 줄이기 */
+    margin: 0 5px; /* 마진 조정 */
+  }
+
+
 `;
 
 const UserActions = styled.div`
