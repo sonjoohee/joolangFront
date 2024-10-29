@@ -150,8 +150,8 @@ const Title = styled.h1`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%; /* 전체 너비 사용 */
-  max-width: 500px; /* 최대 너비 설정 */
+  width: 100%; 
+  max-width: 500px;
   justify-content: center;
 `;
 
@@ -178,7 +178,7 @@ const InputContainer = styled.div`
 `;
 
 const InputContainer2 = styled.div`
-  margin-bottom: 25px; /* 각 입력 필드 사이 간격 */
+  margin-bottom: 25px; 
   text-align: left;
   width:480px;
 

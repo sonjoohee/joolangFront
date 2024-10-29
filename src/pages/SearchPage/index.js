@@ -81,7 +81,7 @@ const NoResults = styled.p`
   font-size: 24px;
   font-weight: bold;
   color: #777;
-  transform: translateY(-220px); /* 올바른 속성 이름 */
+  transform: translateY(-220px); 
 
 
 `;

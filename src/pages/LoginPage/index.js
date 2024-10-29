@@ -203,16 +203,16 @@ const Link = styled.span`
 `;
 
 const Divider = styled.span`
-  margin: 0 5px; /* 구분선 좌우 마진 */
-  color: #ccc; /* 구분선 색상 */
+  margin: 0 5px;
+  color: #ccc; 
 `;
 
 
 const SocialLoginSection = styled.div`
-  text-align: center; /* 중앙 정렬 */
-  margin-top: 20px; /* 상단 여백 추가 */
-  width: 100%; /* 전체 너비 사용 */
-  max-width: 400px; /* 최대 너비 설정 */
+  text-align: center;
+  margin-top: 20px; 
+  width: 100%; 
+  max-width: 400px;
 `;
 
 
@@ -226,14 +226,14 @@ const DividerLine = styled.hr`
     border: 0;
     height: 1px;
     background: #ccc;
-    flex: 1; /* 남은 공간을 차지, 기본 너비가 0이기 때문에 설정 필수 */
+    flex: 1; 
     margin: 0 10px; 
 
 `;
 
 const SocialLoginTitle = styled.h2`
   font-size: 20px;
-  margin: 10px 0; /* 텍스트와 구분선 간격 */
+  margin: 10px 0;
 `;
 
 
@@ -255,7 +255,7 @@ const SocialButton = styled.button`
 `;
 
 const Icon = styled.img`
-  width: 25px; /* 아이콘 크기 조절 */
+  width: 25px;
   height: 25px;
   margin-right: 5px;
   vertical-align: middle;
