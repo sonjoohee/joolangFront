@@ -81,12 +81,12 @@ const Chat = () => {
   );
 };
 
-// 스타일 컴포넌트
+
 const Container = styled.div`
   display: flex;
   height: 80vh;
   width: 80%;
-  padding-top: calc(3.5vw + 100px); /*현재 창 넓이의 3.5 = 3.5px*/
+  padding-top: calc(3.5vw + 100px);
   margin-top: 30px;
   
 `;
