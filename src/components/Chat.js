@@ -2,58 +2,101 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faComment as regularComment, faUser as regularUser } from '@fortawesome/free-regular-svg-icons'; // 라인 아이콘 임포트
+import { faComment as regularComment, faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
+  const [lastMessageTimes, setLastMessageTimes] = useState({});
 
   const handleSend = () => {
     if (input.trim()) {
       const newMessage = {
         id: messages.length,
         text: input,
-        direction: "outgoing", // 자신의 메시지
+        direction: "outgoing",
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
       setMessages([...messages, newMessage]);
-      setInput(""); // 입력 필드 초기화
+      setInput("");
 
-      // 상대방 메시지 시뮬레이션
+      setLastMessageTimes((prevTimes) => ({
+        ...prevTimes,
+        [selectedUser]: newMessage.time,
+      }));
+
       const incomingMessage = {
         id: messages.length + 1,
-        text: "상대방의 메시지입니다.", // 여기서 상대방 메시지를 설정
-        direction: "incoming", // 상대방의 메시지
+        text: "상대방의 메시지입니다.",
+        direction: "incoming",
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        user: selectedUser,
       };
 
-      // 1초 후에 상대방 메시지 추가
       setTimeout(() => {
         setMessages((prevMessages) => [...prevMessages, incomingMessage]);
+        setLastMessageTimes((prevTimes) => ({
+          ...prevTimes,
+          [selectedUser]: incomingMessage.time,
+        }));
       }, 1000);
     }
   };
 
   const handleSelectUser = (user) => {
     setSelectedUser(user);
-    // 여기서 사용자의 메시지를 불러오는 로직 추가 가능
   };
 
   return (
     <Container>
       <UserList>
         <ListHeader> 채팅 목록 </ListHeader>
-        <UserItem onClick={() => handleSelectUser("갓지훈")}>
-        <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} /> 갓지훈 <LastMessage>안녕하세요~</LastMessage>
-        </UserItem>
-        <UserItem onClick={() => handleSelectUser("이상진")}>
-        <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} /> 이상진 <LastMessage>어제 받기로 한 물건 확실히 내일 말고...</LastMessage>
-        </UserItem>
-        <UserItem onClick={() => handleSelectUser("귀차나")}>
-        <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} /> 귀차나 <LastMessage>뭐요</LastMessage>
-        </UserItem>
+        
+        <ChatList>
+          <UserItem onClick={() => handleSelectUser("갓지훈")}>
+            <IconWrapper>
+              <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
+            </IconWrapper>
+            <UserInfo>
+              <UserId>갓지훈</UserId>
+              <LastMessage>안녕하세요~</LastMessage>
+            </UserInfo>
+            <MessageInfo>
+              <LastTime>{lastMessageTimes["갓지훈"] || "N/A"}</LastTime>
+             
+            </MessageInfo>
+          </UserItem>
+
+          <UserItem onClick={() => handleSelectUser("이상진")}>
+            <IconWrapper>
+              <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
+            </IconWrapper>
+            <UserInfo>
+              <UserId>이상진</UserId>
+              <LastMessage>어제 받기로 한 물건 확실히 내일 말고...</LastMessage>
+            </UserInfo>
+            <MessageInfo>
+              <LastTime>{lastMessageTimes["이상진"] || "N/A"}</LastTime>
+           
+            </MessageInfo>
+          </UserItem>
+
+          <UserItem onClick={() => handleSelectUser("귀차나")}>
+            <IconWrapper>
+              <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
+            </IconWrapper>
+            <UserInfo>
+              <UserId>귀차나</UserId>
+              <LastMessage>뭐요</LastMessage>
+            </UserInfo>
+            <MessageInfo>
+              <LastTime>{lastMessageTimes["귀차나"] || "N/A"}</LastTime>
+          
+            </MessageInfo>
+          </UserItem>
+        </ChatList>
       </UserList>
 
       <ChatArea>
@@ -61,6 +104,11 @@ const Chat = () => {
         <MessageList>
           {messages.map((msg) => (
             <Message key={msg.id} outgoing={msg.direction === "outgoing"}>
+              {msg.direction === "incoming" && (
+                <IconWrapper>
+                  <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
+                </IconWrapper>
+              )}
               {msg.text}
               <Time>{msg.time}</Time>
             </Message>
@@ -81,7 +129,6 @@ const Chat = () => {
   );
 };
 
-
 const Container = styled.div`
   display: flex;
   height: 80vh;
@@ -90,8 +137,6 @@ const Container = styled.div`
   margin-top: 30px;
   
 `;
-
-
 
 const UserList = styled.div`
   width: 50%;
@@ -107,7 +152,15 @@ const ListHeader = styled.div`
   text-align:left;
 `;
 
+const ChatList = styled.div`
+ display: flex;
+ flex-direction: column;
+  
+`;
+
 const UserItem = styled.div`
+  display: flex;
+  align-items: center;
   text-align: left;
   padding: 20px;
   cursor: pointer;
@@ -115,6 +168,20 @@ const UserItem = styled.div`
   &:hover {
     background-color: #e0e0e0;
   }
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  
+`;
+
+const UserId = styled.div`
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 5px;
+  margin-left: 5px;
 `;
 
 const LastMessage = styled.span`
@@ -128,6 +195,7 @@ const ChatArea = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-right:1px solid #D4D4D4;
 `;
 
 const Header = styled.div`
@@ -152,7 +220,7 @@ const Message = styled.div`
   border-radius: 15px;
   padding: 10px;
   margin: 5px 0;
-  align-self: ${(props) => (props.outgoing ? "flex-end" : "flex-start")}; /* 아웃고잉 메시지는 오른쪽, 인커밍 메시지는 왼쪽 */
+  align-self: ${(props) => (props.outgoing ? "flex-end" : "flex-start")};
   position: relative;
 `;
 
@@ -183,7 +251,7 @@ const SendButton = styled.button`
   color: white;
   border: none;
   cursor: pointer;
-  border-radius: 50%; /* 원형 버튼 */
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,5 +259,29 @@ const SendButton = styled.button`
     background-color: #5fa5d7;
   }
 `;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  margin-right: 10px;
+`;
+
+const MessageInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`;
+
+const LastTime = styled.div`
+  color: #888;
+  margin-right: 5px;
+`;
+
+
 
 export default Chat;
