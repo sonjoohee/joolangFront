@@ -52,10 +52,13 @@ const Chat = () => {
   return (
     <Container>
       <UserList>
-        <ListHeader> 채팅 목록 </ListHeader>
+        <ListHeader>채팅 목록</ListHeader>
         
         <ChatList>
-          <UserItem onClick={() => handleSelectUser("갓지훈")}>
+          <UserItem 
+            onClick={() => handleSelectUser("갓지훈")}
+            selected={selectedUser === "갓지훈"}
+          >
             <IconWrapper>
               <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
             </IconWrapper>
@@ -65,11 +68,13 @@ const Chat = () => {
             </UserInfo>
             <MessageInfo>
               <LastTime>{lastMessageTimes["갓지훈"] || "N/A"}</LastTime>
-             
             </MessageInfo>
           </UserItem>
 
-          <UserItem onClick={() => handleSelectUser("이상진")}>
+          <UserItem 
+            onClick={() => handleSelectUser("이상진")}
+            selected={selectedUser === "이��진"}
+          >
             <IconWrapper>
               <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
             </IconWrapper>
@@ -79,11 +84,13 @@ const Chat = () => {
             </UserInfo>
             <MessageInfo>
               <LastTime>{lastMessageTimes["이상진"] || "N/A"}</LastTime>
-           
             </MessageInfo>
           </UserItem>
 
-          <UserItem onClick={() => handleSelectUser("귀차나")}>
+          <UserItem 
+            onClick={() => handleSelectUser("귀차나")}
+            selected={selectedUser === "귀차나"}
+          >
             <IconWrapper>
               <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
             </IconWrapper>
@@ -93,7 +100,6 @@ const Chat = () => {
             </UserInfo>
             <MessageInfo>
               <LastTime>{lastMessageTimes["귀차나"] || "N/A"}</LastTime>
-          
             </MessageInfo>
           </UserItem>
         </ChatList>
@@ -105,12 +111,17 @@ const Chat = () => {
           {messages.map((msg) => (
             <Message key={msg.id} outgoing={msg.direction === "outgoing"}>
               {msg.direction === "incoming" && (
-                <IconWrapper>
-                  <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
-                </IconWrapper>
+                <ProfileInfo>
+                  <IconWrapper>
+                    <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
+                  </IconWrapper>
+                  <UserName>{selectedUser}</UserName>
+                </ProfileInfo>
               )}
-              {msg.text}
-              <Time>{msg.time}</Time>
+              <MessageContent>
+                <MessageText>{msg.text}</MessageText>
+                <Time>{msg.time}</Time>
+              </MessageContent>
             </Message>
           ))}
         </MessageList>
@@ -129,13 +140,13 @@ const Chat = () => {
   );
 };
 
+
 const Container = styled.div`
   display: flex;
   height: 80vh;
   width: 80%;
   padding-top: calc(3.5vw + 100px);
   margin-top: 30px;
-  
 `;
 
 const UserList = styled.div`
@@ -149,13 +160,12 @@ const ListHeader = styled.div`
   background-color: #6ab2e1;
   color: white;
   font-weight: bold;
-  text-align:left;
+  text-align: left;
 `;
 
 const ChatList = styled.div`
- display: flex;
- flex-direction: column;
-  
+  display: flex;
+  flex-direction: column;
 `;
 
 const UserItem = styled.div`
@@ -165,8 +175,10 @@ const UserItem = styled.div`
   padding: 20px;
   cursor: pointer;
   border-radius: 5px;
+  background-color: ${(props) => (props.selected ? "#e0e0e0" : "transparent")};
+
   &:hover {
-    background-color: #e0e0e0;
+    background-color: ${(props) => (props.selected ? "#e0e0e0" : "#f0f0f0")};
   }
 `;
 
@@ -174,7 +186,6 @@ const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  
 `;
 
 const UserId = styled.div`
@@ -195,7 +206,7 @@ const ChatArea = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-right:1px solid #D4D4D4;
+  border-left: 1px solid #D4D4D4;
 `;
 
 const Header = styled.div`
@@ -203,7 +214,7 @@ const Header = styled.div`
   background-color: #6ab2e1;
   color: white;
   font-weight: bold;
-  text-align:left;
+  text-align: left;
 `;
 
 const MessageList = styled.div`
@@ -222,6 +233,27 @@ const Message = styled.div`
   margin: 5px 0;
   align-self: ${(props) => (props.outgoing ? "flex-end" : "flex-start")};
   position: relative;
+`;
+
+const MessageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 5px 0;
+  align-self: ${(props) => (props.outgoing ? "flex-end" : "flex-start")};
+  position: relative;
+`;
+
+const UserName = styled.div`
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #333;
+`;
+
+const MessageText = styled.div`
+  margin: 5px 0;
 `;
 
 const Time = styled.span`
@@ -260,14 +292,22 @@ const SendButton = styled.button`
   }
 `;
 
+const ProfileInfo = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 8px;
+
+`;
+
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: #f0f0f0;
+  background-color: #e0e0e0;
   margin-right: 10px;
 `;
 
@@ -281,7 +321,5 @@ const LastTime = styled.div`
   color: #888;
   margin-right: 5px;
 `;
-
-
 
 export default Chat;
