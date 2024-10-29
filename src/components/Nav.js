@@ -289,19 +289,19 @@ const UserIcons = styled.div`
 
 const UserIcon = styled.div`
   display: flex;
-  flex-direction: column; /* 세로 정렬 */
-  align-items: center; /* 가운데 정렬 */
+  flex-direction: column;
+  align-items: center;
    margin: 0 17px;
   cursor: pointer;
 
   span {
-    font-size: 15px; /* 텍스트 크기 조정 */
-    color: #333; /* 텍스트 색상 */
-    margin-top: 8px; /* 아이콘과 텍스트 간격 */
+    font-size: 15px; 
+    color: #333;
+    margin-top: 8px; 
   }
 
   &:hover {
-    color: #6AB2E1; /* 호버 시 색상 변경 */
+    color: #6AB2E1;
   }
 `;
 
@@ -309,8 +309,4 @@ const UserIcon = styled.div`
 export default Nav;
 
 
-// // Styled component for FontAwesomeIcon
-// const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
-//   font-size: 24px; /* 아이콘 크기 */
-//   line-height: 1.2; /* 줄 높이 */
-// `;
+
