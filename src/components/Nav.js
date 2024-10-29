@@ -162,7 +162,7 @@ const Logo = styled.div`
 
   span {
     font-size: 32px;
-    color: #6AB2E1; /* 로고 색상 */
+    color: #6AB2E1; 
     // font-weight: bold;
     font-family: 'Jalnan';
     
