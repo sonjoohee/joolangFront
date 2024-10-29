@@ -48,6 +48,10 @@ const Nav = () => {
     navigate('/ChatPage'); 
   };
 
+  const myPageClick = () => {
+    navigate('/MyPage'); 
+  };
+
   const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'Jalnan';
