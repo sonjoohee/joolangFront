@@ -1,7 +1,7 @@
-import React from 'react';
+import {React, useState} from 'react';
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
-import {useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import { faComment as regularComment, faUser as regularUser } from '@fortawesome/free-regular-svg-icons'; // 라인 아이콘 임포트
@@ -9,14 +9,23 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 
 
+
+
+
 const Nav = () => {
 
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
 
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+  
 
   const handleAddButtonClick = () => {
-    navigate('/SearchPage'); 
+    navigate(`/SearchPage?q=${searchValue}`); 
   };
+
 
   const logAddButtonClick = () => {
     navigate('/LoginPage');
@@ -34,9 +43,10 @@ const Nav = () => {
     navigate('/ProductPage'); 
   };
 
-  const myPageClick = () => {
-    navigate('/MyPage');
-  }
+
+  const ChatButtonClick = () => {
+    navigate('/ChatPage'); 
+  };
 
   const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -46,7 +56,11 @@ const Nav = () => {
     font-style: normal;
   }
 
+
 `;
+
+
+
 
 
 
@@ -63,13 +77,19 @@ const Nav = () => {
       </>
 
       <SearchContainer>
-        <SearchInput placeholder="찾고 싶은 물품이나 동네를 검색해보세요!" />
+        <SearchInput  
+        value={searchValue} 
+        onChange={handleChange} // 검색 값 변경 시 상태 업데이트
+        placeholder="찾고 싶은 물품이나 동네를 검색해보세요!" />
         <SearchIcon onClick={handleAddButtonClick}><FontAwesomeIcon icon={faSearch} /></SearchIcon>
       </SearchContainer>
 
+
+
+      
       <NavItems>
         <NavItem onClick={productClick}>중고물품</NavItem>
-        <NavItem onClick={writeButtonClick}>기업소개</NavItem>
+        <NavItem onClick={writeButtonClick}>게시글 작성</NavItem>
         <NavItem>이벤트</NavItem>
         <NavItem>커뮤니티</NavItem>
         <NavItem>고객센터</NavItem>
@@ -84,7 +104,7 @@ const Nav = () => {
 
       <UserIcons>
         <UserIcon className="comment">
-          <FontAwesomeIcon icon={regularComment} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+          <FontAwesomeIcon  onClick={ChatButtonClick} icon={regularComment} style={{ fontSize: '28px', lineHeight: '1.2' }} />
           <span>채팅</span>
         </UserIcon>
         <UserIcon className="shop">
@@ -99,11 +119,17 @@ const Nav = () => {
      
     </NavWrapper>
 
+  
+
+    
     
     </>
   
   );
 }
+
+
+
 
 
 const NavWrapper = styled.nav`
@@ -145,7 +171,7 @@ const Logo = styled.div`
 
 const SearchContainer = styled.div`
 
-  flex: 1; /*남은 공간을 모두 차지 하도록 설정*/
+  flex: 1; 
   margin: 0 20px;
 `;
 
@@ -154,14 +180,14 @@ const SearchInput = styled.input`
   width: 30%;
   position: relative;
   transform: translateX(-80%); 
-  padding: 12px 40px;
+  padding: 12px 40px; 
   border: 2px solid #6AB2E1;
   border-radius: 30px;
   outline: none;
   font-size: 16px;
   
 
-  &::placeholder { 
+  &::placeholder {   /*& -> 현재 적용되는 부분 언급 */
     color: #aaa;
     
   }
@@ -171,8 +197,8 @@ const SearchIcon = styled.span`
   position: absolute;
   left:47%; 
   top: 50%; 
-  transform: translateY(-50%); 
-  font-size: 20px; 
+  transform: translateY(-50%);  
+  font-size: 20px;
   pointer-events: true; 
   cursor: pointer;
   color:  #6AB2E1;
@@ -183,11 +209,12 @@ const SearchIcon = styled.span`
 
 const NavItems = styled.div`
   display: flex;
+  flex-wrap: nowrap;
   position: absolute;
   top: 75%;
   border-top: solid 1px #D4D4D4;
   width: 100vw;
-   padding: 12px 0;
+  padding: 12px 0px;
   justify-content: space-between;
   align-items: center;
   
@@ -201,9 +228,25 @@ const NavItem = styled.div`
   color: #333;
   cursor: pointer;
   font-weight: bold;
+  white-space: nowrap;
 
   &:hover {
     color:#6AB2E1;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 16px; 
+    margin: 0 15px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px; 
+    margin: 0 10px; 
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px; 
+    margin: 0 5px;
   }
 `;
 
@@ -211,7 +254,7 @@ const UserActions = styled.div`
   position: absolute;
   top: 10%;
   right: 5%;
-  display: flex; /*flex conatainer가 됨, 기본이 row */
+  display: flex; 
   align-items: center;
 
 `;
@@ -236,6 +279,9 @@ const UserIcons = styled.div`
   display: flex; 
   align-items: center;
 
+  
+  
+
 
 `
 ;
@@ -243,21 +289,28 @@ const UserIcons = styled.div`
 
 const UserIcon = styled.div`
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 가운데 정렬 */
    margin: 0 17px;
   cursor: pointer;
 
   span {
-    font-size: 15px; 
-    color: #333; 
-    margin-top: 8px; 
+    font-size: 15px; /* 텍스트 크기 조정 */
+    color: #333; /* 텍스트 색상 */
+    margin-top: 8px; /* 아이콘과 텍스트 간격 */
   }
 
   &:hover {
-    color: #6AB2E1; 
+    color: #6AB2E1; /* 호버 시 색상 변경 */
   }
 `;
 
 
 export default Nav;
+
+
+// // Styled component for FontAwesomeIcon
+// const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+//   font-size: 24px; /* 아이콘 크기 */
+//   line-height: 1.2; /* 줄 높이 */
+// `;

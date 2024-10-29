@@ -91,14 +91,13 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-// Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  margin-top: 50px;
+  margin-top:2vh;
 
 `;
 

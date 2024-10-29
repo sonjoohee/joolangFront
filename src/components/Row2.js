@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
-const Row = ({ title, index }) => {
+const Row2 = ({ title, index }) => {
   const [itemList, setItemList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 3;
@@ -30,16 +30,16 @@ const Row = ({ title, index }) => {
 
     if (direction === 'left') {
       itemListElement.scrollLeft -= scrollAmount;
-      setCurrentPage((prev) => Math.max(prev - 1, 0));
+      setCurrentPage((prev) => Math.max(prev - 1, 0)); // 왼쪽으로 스크롤 시 페이지 감소
     } else {
       itemListElement.scrollLeft += scrollAmount;
-      setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(itemList.length / itemsPerPage) - 1));
+      setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(itemList.length / itemsPerPage) - 1)); // 오른쪽으로 스크롤 시 페이지 증가
     }
   };
 
   return (
     <RowWrapper>
-      <RowTitle>{title}</RowTitle>
+      <RowTitle>내가 찾고 있는 물건</RowTitle>
       <Slider>
         <ArrowLeft>
           <FontAwesomeIcon
@@ -84,6 +84,7 @@ const RowWrapper = styled.div`
   width: 1074px;
   height: 360px;
   margin: 200px auto;
+
 `;
 
 const RowTitle = styled.h2`
@@ -151,16 +152,18 @@ const ArrowLeft = styled.div`
   left: -12px;
   cursor: pointer;
   height: 30%;
+  z-index: 10; 
 `;
 
 const ArrowRight = styled.div`
   position: absolute;
   height: 30%;
   transform: translatex(1080px);
-
   cursor: pointer;
+  z-index: 10; 
 `;
 
+// 페이지 인디케이터 스타일
 const Indicators = styled.div`
   display: flex;
   justify-content: center;
@@ -168,17 +171,18 @@ const Indicators = styled.div`
 `;
 
 const Indicator = styled.div`
-  width: 15px;
-  height: 8px;
-  border-radius: 14px;
-  background: #D2E8F6;
+  width: 15px; // 기본 막대 길이
+  height: 8px; // 기본 막대 높이
+  border-radius: 14px; // 둥근 모서리
+  background: #D2E8F6; // 비활성 상태 색상
   margin: 0 5px;
-  transition: width 0.3s, background 0.3s;
+  transition: width 0.3s, background 0.3s; // 너비와 배경색 전환
 
+  // 활성화된 페이지에 대한 스타일
   ${({ active }) => active && `
-    width: 40px;
-    background: #6AB2E1;
+    width: 40px; // 현재 페이지 점의 길이
+    background: #6AB2E1; // 강조 색상
   `}
 `;
 
-export default Row;
+export default Row2;

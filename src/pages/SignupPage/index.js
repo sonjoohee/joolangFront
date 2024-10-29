@@ -12,8 +12,6 @@ const SignupPage = () => {
   const [authCode, setAuthCode] = useState('');
   const [email, setEmail] = useState('');
   const [com, setEmailcom] = useState('');
-  const [address, setAddress] = useState('');
-  const [detailAddress, setDetailAddress] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -119,30 +117,6 @@ const SignupPage = () => {
        
         </InputContaineremail>
 
-        <InputContainer>
-          <Label>주소 <span> *</span> </Label> 
-          <Input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="주소 입력"
-            required
-          />
-          <Button>주소 검색</Button>
-          
-        </InputContainer>
-
-        <InputContainer2>
-
-          <Input
-            type="text"
-            value={detailAddress}
-            onChange={(e) => setDetailAddress(e.target.value)}
-            placeholder="상세주소 입력"
-            required
-          />
-        </InputContainer2>
-
         <ButtonContainer>
           <Button type="button" onClick={() => navigate(-1)}>뒤로 가기</Button>
           <Button type="submit">회원가입 완료</Button>
@@ -162,8 +136,8 @@ const Container = styled.div`
   justify-content: center;
   height: 100vh;
   padding: 20px;
-  margin-top: 200px;
   margin-bottom:200px;
+  margin-top:10vh;
 
 `;
 
@@ -207,6 +181,8 @@ const InputContainer2 = styled.div`
   margin-bottom: 25px; /* 각 입력 필드 사이 간격 */
   text-align: left;
   width:480px;
+
+  
 
 `;
 
@@ -290,3 +266,4 @@ const ButtonContainer = styled.div`
     }  
   }
 `;
+

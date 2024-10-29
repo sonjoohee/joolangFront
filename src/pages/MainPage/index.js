@@ -55,3 +55,31 @@ const Container = styled.main`
 const Rows = styled.div`
   margin-top: 900px; /* 네비게이션 바와의 간격 조정 */
 `;
+
+
+
+//cover : 화면을 덮어씌움
+//contain: 비율 유지하면서 적용 
+
+
+// const Container = styled.main`
+//   position: relative;
+//   min-height: 100vh;
+//   //overflow-x: hidden;
+//   display: block;
+//   padding: calc(3.5vw + 5px);
+
+  
+
+
+
+//   &:after {
+//     background: url("/images/BG.png") center center / cover  no-repeat fixed;
+//          /* / : 웹사이트위 최상위 루트 (public은 루트로 간주*/
+//     content: "";
+//     position: absolute;
+//     inset: 0px;
+//     opacity: 1;
+//     z-index:2;
+//   }
+// `;

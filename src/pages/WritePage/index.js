@@ -22,6 +22,7 @@ const WritePage = () => {
   };
 
   const handleLabelClick = () => {
+    // 파일 입력 클릭
     fileInputRef.current.click();
   };
 
@@ -101,7 +102,7 @@ const WritePage = () => {
 
 export default WritePage;
 
-
+// Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -253,3 +254,5 @@ const Button = styled.button`
     background-color: #ccc;
   }
 `;
+
+
