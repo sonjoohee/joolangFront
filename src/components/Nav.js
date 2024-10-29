@@ -89,7 +89,7 @@ const Nav = () => {
       
       <NavItems>
         <NavItem onClick={productClick}>중고물품</NavItem>
-        <NavItem onClick={writeButtonClick}>게사글 작성</NavItem>
+        <NavItem onClick={writeButtonClick}>게시글 작성</NavItem>
         <NavItem>이벤트</NavItem>
         <NavItem>커뮤니티</NavItem>
         <NavItem>고객센터</NavItem>
@@ -171,7 +171,7 @@ const Logo = styled.div`
 
 const SearchContainer = styled.div`
 
-  flex: 1; /*남은 공간을 모두 차지 하도록 설정*/
+  flex: 1; 
   margin: 0 20px;
 `;
 
@@ -180,7 +180,7 @@ const SearchInput = styled.input`
   width: 30%;
   position: relative;
   transform: translateX(-80%); 
-  padding: 12px 40px; /* 아이콘을 위한 여백 */
+  padding: 12px 40px; 
   border: 2px solid #6AB2E1;
   border-radius: 30px;
   outline: none;
@@ -195,11 +195,11 @@ const SearchInput = styled.input`
 
 const SearchIcon = styled.span`
   position: absolute;
-  left:47%; /* 오른쪽 끝에서 10% 위치 */
-  top: 50%; /* 요소의 상단을 부모 요소의 높이의 50% 위치에 배치 */ 
-  transform: translateY(-50%);  /* 자신의 높이의 50%만큼 위로 이동 */
-  font-size: 20px; /* 아이콘 크기 조정 */
-  pointer-events: true; /* none : 아이콘 클릭 방지 */
+  left:47%; 
+  top: 50%; 
+  transform: translateY(-50%);  
+  font-size: 20px;
+  pointer-events: true; 
   cursor: pointer;
   color:  #6AB2E1;
 `;
@@ -216,7 +216,7 @@ const NavItems = styled.div`
   width: 100vw;
   padding: 12px 0px;
   justify-content: space-between;
-  align-items: center; /* 세로 가운데 정렬 */
+  align-items: center;
   
   
 `;
@@ -235,18 +235,18 @@ const NavItem = styled.div`
   }
 
   @media (max-width: 1200px) {
-    font-size: 16px; /* 1200px 이하에서 폰트 크기 줄이기 */
-    margin: 0 15px; /* 마진 조정 */
+    font-size: 16px; 
+    margin: 0 15px;
   }
 
   @media (max-width: 768px) {
-    font-size: 14px; /* 768px 이하에서 폰트 크기 줄이기 */
-    margin: 0 10px; /* 마진 조정 */
+    font-size: 14px; 
+    margin: 0 10px; 
   }
 
   @media (max-width: 480px) {
-    font-size: 12px; /* 480px 이하에서 폰트 크기 줄이기 */
-    margin: 0 5px; /* 마진 조정 */
+    font-size: 12px; 
+    margin: 0 5px;
   }
 `;
 
@@ -254,7 +254,7 @@ const UserActions = styled.div`
   position: absolute;
   top: 10%;
   right: 5%;
-  display: flex; /*flex conatainer가 됨, 기본이 row */
+  display: flex; 
   align-items: center;
 
 `;
@@ -276,7 +276,7 @@ const UserIcons = styled.div`
   position: absolute;
   top: 35%;
   right:6%;
-  display: flex; /*flex conatainer가 됨, 기본이 row */
+  display: flex; 
   align-items: center;
 
   
