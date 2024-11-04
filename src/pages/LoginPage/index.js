@@ -1,41 +1,61 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Axios를 통해 API 호출
+import axios from 'axios';
 import Nav from "../../components/Nav";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [userId, setUserId] = useState(''); 
+  const [password, setPassword] = useState(''); 
+  const [rememberMe, setRememberMe] = useState(false); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 사용자 인증 API 호출
+
     try {
-      const response = await axios.post(`http://localhost:8080/home/certifyUserProc`, null, {
+      const response = await axios.post(`http://localhost:8080/home/login`, null, {
         params: {
-          userId: email,
-          email: email, // 사용자 이메일
+          userId: userId,
+          password: password, 
         },
       });
 
       if (response.status === 200) {
-        console.log('사용자 인증 성공:', response.data);
-       
+        console.log('로그인 성공:', response.data);
+        
+        // JWT 토큰을 localStorage에 저장
+        localStorage.setItem('jwtToken', response.data.token); 
+        
+        // 메인 페이지로 가는거/
         navigate('/MainPage');
       }
     } catch (error) {
-      console.error('사용자 인증 실패:', error.response.data);
-      
+      console.error('로그인 실패:', error.response.data);
+      alert('로그인에 실패하였습니다. 아이디와 비밀번호를 확인하세요.');
     }
   };
 
   const handleAddButtonClick = () => {
     navigate('/SignupPage'); 
   };
+
+
+  // 네이버 로그인 관련 
+  const NAVER_CLIENT_ID = 'EaIrXgdSWmuPs8taaF1X'; 
+  const NAVER_CLIENT_SECRET = 'NAXIApREPy'; 
+  const STATE = Math.random().toString(36).substring(2);
+  const REDIRECT_URI = encodeURIComponent('http://localhost:8080/home/oauth2/callback'); // 리디렉션 URI
+
+  // 네이버 인증 URL 생성 : 
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
+
+  const handleNaverLogin = () => {
+    // 네이버 소셜 로그인으로 리디렉션 : 네이버 로그인 후 돌아옴
+    window.location.href = NAVER_AUTH_URL;
+  };
+
 
   return (
     <Container>
@@ -45,9 +65,9 @@ const LoginPage = () => {
       <Form onSubmit={handleSubmit}>
         <InputContainer>
           <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
             placeholder="아이디"
             required
           />
@@ -75,7 +95,8 @@ const LoginPage = () => {
         </CheckboxContainer>
 
         <LinkContainer>
-      
+          <Link>아이디 찾기</Link>
+          <Divider>|</Divider>
           <Link>비밀번호 찾기</Link>
           <Divider>|</Divider>
           <Link onClick={handleAddButtonClick}>회원가입</Link>
@@ -88,7 +109,7 @@ const LoginPage = () => {
           <SocialLoginTitle>소셜 로그인</SocialLoginTitle>
           <DividerLine />
         </SocialLogin>
-        <SocialButton>
+        <SocialButton onClick={handleNaverLogin}>
           <Icon src="/images/네이버 로고 아이콘.png" alt="네이버 아이콘" />
           네이버 아이디로 로그인하기
         </SocialButton>
@@ -98,7 +119,6 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
 
 
 const Container = styled.div`
