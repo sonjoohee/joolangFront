@@ -75,8 +75,7 @@ const LoginPage = () => {
         </CheckboxContainer>
 
         <LinkContainer>
-          <Link>아이디 찾기</Link>
-          <Divider>|</Divider>
+      
           <Link>비밀번호 찾기</Link>
           <Divider>|</Divider>
           <Link onClick={handleAddButtonClick}>회원가입</Link>
