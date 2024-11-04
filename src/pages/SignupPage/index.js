@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Nav from "../../components/Nav";
+import axios from 'axios';
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
@@ -14,9 +15,55 @@ const SignupPage = () => {
   const [com, setEmailcom] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 회원가입 처리 로직 추가 필요
+
+    // 최종적ㅇ로 서버에 전송될 것
+    const signupData = {
+      username, 
+      password, 
+      nickname, 
+      phoneNum: phone, 
+      email: `${email}@${com}`, 
+      provider: 'local', 
+      role: 'user', 
+      providerId: 'local', 
+      userId: username,
+      id: null
+  };
+  
+
+    try {
+      const response = await axios.post('http://localhost:8080/home/joinProc', signupData);
+      console.log('회원가입 성공:', response.data);
+
+      navigate('/MainPage'); 
+    } catch (error) {
+      console.error('회원가입 실패:', error.response.data);
+    
+    }
+  };
+
+  const handleSendSMS = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8080/home/sendSmsProc?phoneNumber=${phone}`);
+      console.log('인증번호 발송 성공:', response.data);
+      
+    } catch (error) {
+      console.error('인증번호 발송 실패:', error.response.data);
+    
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/home/checkProc?verifyCode=${authCode}&phoneNumber=${phone}`);
+      console.log('인증 성공:', response.data);
+      
+    } catch (error) {
+      console.error('인증 실패:', error.response.data);
+      
+    }
   };
 
   return (
@@ -34,7 +81,7 @@ const SignupPage = () => {
             placeholder="아이디 입력"
             required
           />
-          <Button>중복 확인</Button>
+          <Button type="button" onClick={() => {/* 중복 확인 로직 필요*/}}>중복 확인</Button>
         </InputContainer>
 
         <InputContainer2>
@@ -56,7 +103,9 @@ const SignupPage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="비밀번호 재입력"
             required
+            style={{ borderColor: confirmPassword && password !== confirmPassword ? 'red' : '#ccc' }}
           />
+          {confirmPassword && password !== confirmPassword && <span style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</span>}
         </InputContainer2>
 
         <InputContainer2>
@@ -79,7 +128,7 @@ const SignupPage = () => {
             placeholder="전화번호 입력 (- 제외 숫자만 입력)"
             required
           />
-          <Button>인증번호 발송</Button>
+          <Button type="button" onClick={handleSendSMS}>인증번호 발송</Button>
         </InputContainer>
 
         <InputContainer>
@@ -91,30 +140,26 @@ const SignupPage = () => {
             placeholder="인증번호 입력"
             required
           />
-          <Button>인증하기</Button>
+          <Button type="button" onClick={handleVerifyCode}>인증하기</Button>
         </InputContainer>
 
-      
-          <Label>이메일 주소 </Label> 
-          <InputContaineremail>
+        <Label>이메일 주소 </Label> 
+        <InputContaineremail>
           <Input
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="이메일 입력"
-            required
+            // required
           />
-
           <span>@</span>
-
-        <Input
-            type="com"
+          <Input
+            type="text" 
             value={com}
             onChange={(e) => setEmailcom(e.target.value)}
             placeholder="ex)naver.com"
-            required
+            // required
           />
-       
         </InputContaineremail>
 
         <ButtonContainer>
@@ -127,7 +172,6 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
-
 
 const Container = styled.div`
   display: flex;
@@ -189,7 +233,7 @@ const InputContainer2 = styled.div`
 
 
 const InputContaineremail = styled.div`
-  margin-bottom: 25px; /* 각 입력 필드 사이 간격 */
+  margin-bottom: 25px; 
  
   width:500px;
   display: flex;
@@ -234,7 +278,7 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  margin-top: 5px; /* 버튼과 입력 필드 간격 */
+  margin-top: 5px;
   padding: 12px 20px;
   transform: translate(390px,-52px);
 
@@ -252,11 +296,11 @@ const ButtonContainer = styled.div`
 
   Button {
     background-color: #777777;
-    padding: 12px ; /* 세로 패딩만 추가 */
-    width: 180px; /* 고정된 너비 설정 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-    border: none; /* 기본 테두리 제거 */
-    border-radius: 1px; /* 모서리 둥글게 */
+    padding: 12px ; 
+    width: 180px;
+    text-align: center; 
+    border: none; 
+    border-radius: 1px; 
 
 
     &:hover {

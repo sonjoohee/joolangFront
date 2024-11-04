@@ -73,7 +73,7 @@ const Chat = () => {
 
           <UserItem 
             onClick={() => handleSelectUser("이상진")}
-            selected={selectedUser === "이��진"}
+            selected={selectedUser === "이상진"}
           >
             <IconWrapper>
               <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />

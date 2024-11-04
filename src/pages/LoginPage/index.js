@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Axios를 통해 API 호출
 import Nav from "../../components/Nav";
 
 const LoginPage = () => {
@@ -9,79 +10,87 @@ const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('이메일:', email);
-    console.log('비밀번호:', password);
-    console.log('ID 저장:', rememberMe);
-    // 로그인 처리 로직 추가 필요
+
+    // 사용자 인증 API 호출
+    try {
+      const response = await axios.post(`http://localhost:8080/home/certifyUserProc`, null, {
+        params: {
+          userId: email,
+          email: email, // 사용자 이메일
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('사용자 인증 성공:', response.data);
+        // 로그인 성공 후 마이페이지로 이동
+        navigate('/mypage');
+      }
+    } catch (error) {
+      console.error('사용자 인증 실패:', error.response.data);
+      // 에러 처리 로직 추가 (예: 에러 메시지 표시)
+    }
   };
 
   const handleAddButtonClick = () => {
-    navigate('/SignupPage'); // 회원가입 페이지로 이동
+    navigate('/SignupPage'); 
   };
 
   return (
     <Container>
-      <Nav/>
+      <Nav />
       <Title>회원 로그인</Title>
 
       <Form onSubmit={handleSubmit}>
-     
         <InputContainer>
-        <Input
+          <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="아이디"
+            placeholder="아이디 입력"
             required
-        />
+          />
         </InputContainer>
 
         <InputContainer>
-        <Input
+          <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호"
+            placeholder="비밀번호 입력"
             required
-        />
-         </InputContainer>
+          />
+        </InputContainer>
 
-
-         <Button type="submit">로그인</Button>
-      
+        <Button type="submit">로그인</Button>
 
         <CheckboxContainer>
-            <Checkbox
+          <Checkbox
             type="checkbox"
             checked={rememberMe}
             onChange={() => setRememberMe(!rememberMe)}
-            />
-            <CheckboxLabel>아이디 저장</CheckboxLabel>
+          />
+          <CheckboxLabel>아이디 저장</CheckboxLabel>
         </CheckboxContainer>
 
-    
-
         <LinkContainer>
-            <Link>아이디 찾기</Link>
-            <Divider>|</Divider>
-            <Link>비밀번호 찾기</Link>
-            <Divider>|</Divider>
-            <Link onClick={handleAddButtonClick}>회원가입</Link>
+          <Link>아이디 찾기</Link>
+          <Divider>|</Divider>
+          <Link>비밀번호 찾기</Link>
+          <Divider>|</Divider>
+          <Link onClick={handleAddButtonClick}>회원가입</Link>
         </LinkContainer>
-    </Form>
-
+      </Form>
 
       <SocialLoginSection>
-        
         <SocialLogin>
-        <DividerLine />
-        <SocialLoginTitle>소셜 로그인</SocialLoginTitle>
-        <DividerLine />
+          <DividerLine />
+          <SocialLoginTitle>소셜 로그인</SocialLoginTitle>
+          <DividerLine />
         </SocialLogin>
         <SocialButton>
-        <Icon src="/images/네이버 로고 아이콘.png" alt="네이버 아이콘" />
+          <Icon src="/images/네이버 로고 아이콘.png" alt="네이버 아이콘" />
           네이버 아이디로 로그인하기
         </SocialButton>
       </SocialLoginSection>
@@ -90,6 +99,8 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
 
 const Container = styled.div`
   display: flex;
