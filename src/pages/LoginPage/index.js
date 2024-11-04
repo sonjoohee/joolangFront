@@ -24,12 +24,12 @@ const LoginPage = () => {
 
       if (response.status === 200) {
         console.log('사용자 인증 성공:', response.data);
-        // 로그인 성공 후 마이페이지로 이동
-        navigate('/mypage');
+       
+        navigate('/MainPage');
       }
     } catch (error) {
       console.error('사용자 인증 실패:', error.response.data);
-      // 에러 처리 로직 추가 (예: 에러 메시지 표시)
+      
     }
   };
 
@@ -48,7 +48,7 @@ const LoginPage = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="아이디 입력"
+            placeholder="아이디"
             required
           />
         </InputContainer>
@@ -58,7 +58,7 @@ const LoginPage = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호 입력"
+            placeholder="비밀번호"
             required
           />
         </InputContainer>
