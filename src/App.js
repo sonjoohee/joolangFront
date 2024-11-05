@@ -5,6 +5,8 @@ import ProductPage from "./pages/ProductPage";
 import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import ChatPage from "./pages/ChatPage";
+import MyPage from "./pages/MyPage";
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 
@@ -29,6 +31,8 @@ function App() {
           <Route path="WritePage" element={<WritePage />} />
           <Route path="ProductPage" element={<ProductPage />} />
           <Route path="SearchPage" element={<SearchPage />} />
+          <Route path="ChatPage" element={<ChatPage />} />
+          <Route path="MyPage" element={<MyPage />} />
       </Route>
       </Routes>
 

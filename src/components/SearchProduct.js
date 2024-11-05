@@ -1,15 +1,21 @@
-import {React,useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Pagination from '@mui/material/Pagination';
+import LikeButton from './LikeButton';
 
-const SearchProduct = ({ itemList = [] }) => { // 기본값을 빈 배열로 설정
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 15; // 페이지당 아이템 수
+
+const SearchProduct = ({ itemList }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
 
   const totalPages = Math.ceil(itemList.length / itemsPerPage);
-  const displayedItems = itemList.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+  const displayedItems = itemList.slice(
+    (currentPage - 1) * itemsPerPage, 
+    currentPage * itemsPerPage
+  );
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   return (
@@ -24,25 +30,32 @@ const SearchProduct = ({ itemList = [] }) => { // 기본값을 빈 배열로 설
               <ItemDate>{new Date(item.date).toLocaleDateString()}</ItemDate>
             </ItemDetails>
             <Likes>{item.likes} ❤️</Likes>
+            <LikeButton 
+              initialLiked={item.liked} 
+              initialLikesCount={item.likes} 
+              onLikeChange={(newLiked, newLikesCount) => {
+                // 좋아요 상태 변경 로직 추가
+              }}
+            />
           </ItemCard>
         ))}
       </ItemList>
-      <Pagination>
-        {Array.from({ length: totalPages }).map((_, pageIndex) => (
-          <PageNumber
-            key={pageIndex}
-            onClick={() => handlePageChange(pageIndex)}
-            active={pageIndex === currentPage}
-          >
-            {pageIndex + 1}
-          </PageNumber>
-        ))}
-      </Pagination>
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={handlePageChange}
+        color="primary"
+      />
     </RowWrapper>
   );
 };
+
 const RowWrapper = styled.div`
   margin: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ItemList = styled.div`
@@ -98,19 +111,6 @@ const Likes = styled.div`
   padding: 2px 4px;
 `;
 
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
 
-const PageNumber = styled.button`
-  color: ${({ active }) => (active ?  '#6AB2E1' : 'black')};
-  margin: 15px 5px;
-  cursor: pointer;
-  border:none;
-  background:none;
-  font-weight: bold;
-`;
 
 export default SearchProduct;

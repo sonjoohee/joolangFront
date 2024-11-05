@@ -30,28 +30,30 @@ const Container = styled.main`
   position: relative;
   min-height: 100vh;
   display: block;
-  padding: calc(3.5vw + 5px); /*현재 창 넓이의 3.5 = 3.5px*/
-  background-attachment: fixed; /* 배경 고정 */
+  padding: calc(3.5vw + 5px); 
+  background-attachment: fixed; 
 
 
 
   &:after {
-    background: url("/images/BG.png") center center / contain no-repeat fixed; /* 배경 이미지 설정 */
+    background: url("/images/BG.png") center center / contain no-repeat fixed;
     content: "";
     position: absolute;
     min-height: 100vh;
-    inset: 0; /* 모든 방향에 대해 0으로 설정하여 전체를 채우도록 함 */
+    inset: 0; 
     opacity: 1;
     transform: translatey(-55vh);
     
 
   
-    z-index: -1; /* 배경을 다른 요소들 아래에 위치시킴 */
+    z-index: -1;
   }
 `;
 
 
 
 const Rows = styled.div`
-  margin-top: 900px; /* 네비게이션 바와의 간격 조정 */
+  margin-top: 900px; 
 `;
+
+
