@@ -217,7 +217,7 @@ const NavItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   position: absolute;
-  top: 75%;
+  top: 15vh;
   border-top: solid 1px #d4d4d4;
   width: 100vw;
   padding: 12px 0px;
