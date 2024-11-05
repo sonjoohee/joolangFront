@@ -41,10 +41,10 @@ export default MyPageSideBar;
 const StyledSideBar = styled.nav`
   display: flex;
   height: auto;
+  width: 10%;
   margin: 0px;
   flex-direction: column;
-  margin-top: 600px;
-  margin-left: 100px;
+  text-align: left;
 `;
 
 const StyledSideBarMenu = styled(Link)`
