@@ -1,11 +1,28 @@
 // src/components/ChatArea.js
-import React from 'react';
+import {React, useRef, useState} from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 const ChatArea = ({ selectedUser, messages, input, setInput, handleSend }) => {
+
+const fileInputRef = useRef(null); // 파일 입력을 위한 ref
+
+const [images, setImages] = useState([]);
+
+const handleLabelClick = () => {
+    // 파일 입력 클릭
+    fileInputRef.current.click();
+  };
+
+
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(prevImages => [...prevImages, ...files]);
+  };
+
   return (
     <ChatAreaContainer>
       <Header>{selectedUser ? `${selectedUser} 님과의 채팅` : "채팅을 선택하세요"}</Header>
@@ -27,7 +44,34 @@ const ChatArea = ({ selectedUser, messages, input, setInput, handleSend }) => {
           </Message>
         ))}
       </MessageList>
+     
+      
       <InputContainer>
+
+
+      <ImagePreview>
+        {images.map((img, index) => (
+          <ImageItem key={index}>
+            <ImagePreviewText>{img.name}</ImagePreviewText>
+            <RemoveButton onClick={() => setImages(images.filter((_, i) => i !== index))}>×</RemoveButton>
+          </ImageItem>
+        ))}
+      </ImagePreview>
+      <FileInputContainer>
+        <FontAwesomeIcon 
+          icon={faPaperclip} 
+          color="#6AB2E1" 
+          onClick={handleLabelClick}
+        />
+        <FileInput
+          type="file"
+          multiple
+          ref={fileInputRef}
+          onChange={handleImageUpload}
+          style={{ display: 'none' }}
+        />
+      </FileInputContainer>
+
         <Input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -135,9 +179,15 @@ const InputContainer = styled.div`
 const Input = styled.input`
   flex: 1;
   padding: 10px;
+//   border: 2px solid #D4D4D4;
   border: none;
-  border-radius: 0;
+  border-radius: 30px;
   outline: none;
+  background-color: #F2F2F2;
+  margin-left: 10px;
+  margin-right: 10px;
+;
+
 `;
 
 const SendButton = styled.button`
@@ -153,6 +203,62 @@ const SendButton = styled.button`
   &:hover {
     background-color: #5fa5d7;
   }
+`;
+
+
+const FileInputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+
+    &:hover {
+
+    svg {
+     color: #ccc;
+    }
+
+  }
+`;
+
+const FileInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  cursor: pointer; 
+  position: absolute;
+
+  }
+`;
+
+const ImagePreview = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+`;
+
+const ImageItem = styled.div`
+  position: relative;
+  margin: 5px;
+`;
+
+const ImagePreviewText = styled.div`
+  font-size: 14px;
+  color: #333;
+`;
+
+const RemoveButton = styled.button`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 `;
 
 export default ChatArea;

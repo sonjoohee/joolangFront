@@ -10,6 +10,7 @@ const Chat = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [lastMessageTimes, setLastMessageTimes] = useState({});
 
+
   const handleSend = () => {
     if (input.trim()) {
       const newMessage = {
@@ -147,6 +148,7 @@ const Container = styled.div`
   width: 80%;
   padding-top: calc(3.5vw + 100px);
   margin-top: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const UserList = styled.div`
@@ -206,7 +208,7 @@ const ChatArea = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-left: 1px solid #D4D4D4;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
 `;
 
 const Header = styled.div`
