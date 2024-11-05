@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import MainPage from "./pages/MainPage";
 import WritePage from "./pages/WritePage";
@@ -8,7 +9,6 @@ import SignupPage from "./pages/SignupPage";
 import ChatPage from "./pages/ChatPage";
 import MyPage from "./pages/MyPage";
 import { Outlet, Route, Routes } from 'react-router-dom';
-
 
 
 const Layout =() => {
@@ -40,6 +40,6 @@ function App() {
       
     </div>
   );
-}
+};
 
 export default App;
