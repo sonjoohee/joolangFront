@@ -152,7 +152,8 @@ const NavWrapper = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  height: calc(20vh);
+  // height: calc(20vh);
+  height: 170px;
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
@@ -199,8 +200,20 @@ const SearchInput = styled.input`
   font-size: 16px;
 
   &::placeholder {
-    /*& -> 현재 적용되는 부분 언급 */
+    /*& -> 현재 적용���는 부분 언급 */
     color: #aaa;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 8px;
   }
 `;
 
@@ -219,7 +232,7 @@ const NavItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   position: absolute;
-  top: 15vh;
+  top: 120px;
   border-top: solid 1px #d4d4d4;
   width: 100vw;
   padding: 12px 0px;
