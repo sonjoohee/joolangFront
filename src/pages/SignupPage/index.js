@@ -18,7 +18,7 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 최종적ㅇ로 서버에 전송될 것
+    // 최종적으로 서버에 전송될 것
     const signupData = {
       username, 
       password, 
@@ -35,12 +35,16 @@ const SignupPage = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/home/joinProc', signupData);
-      console.log('회원가입 성공:', response.data);
+      console.log('회원가입 성공:', response?.data);
+
+      // 인증번호 발송 완료 팝업창
+      alert('인증번호가 발송되었습니다.');
 
       navigate('/MainPage'); 
     } catch (error) {
-      console.error('회원가입 실패:', error.response.data);
-    
+      console.error('회원가입 실패:', error?.response?.data || error.message);
+      alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+      navigate('/SignupPage'); // 실패 시 회원가입 페이지로 다시 이동
     }
   };
 
@@ -48,10 +52,9 @@ const SignupPage = () => {
     try {
       const response = await axios.post(`http://localhost:8080/home/sendSmsProc?phoneNumber=${phone}`);
       console.log('인증번호 발송 성공:', response.data);
-      
+      alert('인증번호가 발송되었습니다.');
     } catch (error) {
       console.error('인증번호 발송 실패:', error.response.data);
-    
     }
   };
 
@@ -59,10 +62,9 @@ const SignupPage = () => {
     try {
       const response = await axios.get(`http://localhost:8080/home/checkProc?verifyCode=${authCode}&phoneNumber=${phone}`);
       console.log('인증 성공:', response.data);
-      
+      alert('인증이 성공적으로 완료되었습니다.');
     } catch (error) {
       console.error('인증 실패:', error.response.data);
-      
     }
   };
 

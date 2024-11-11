@@ -77,7 +77,7 @@ const Nav = () => {
           <GlobalStyle />
           <Logo onClick={() => (window.location.href = "/")}>
             <span>주랑</span>
-            <img alt="logo" src="/images/logo.svg" />
+            <img alt="logo" src="/images/logo.png" />
           </Logo>
         </>
 
@@ -171,6 +171,8 @@ const Logo = styled.div`
     width: 40px;
     height: auto;
     margin-right: 10px;
+    margin-top: -10px;
+    margin-left: 5px;
   }
 
   span {
