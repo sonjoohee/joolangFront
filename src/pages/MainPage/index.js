@@ -8,11 +8,7 @@ import Advertise from '../../components/Advertise';
 
 const MainPage = () => {
   return (
- 
-    
     <Container>
-      <Nav />
-
       <Rows>
         <Row title="Hot한 중고물품 득템하기!"  index={0}/>
         <Row title="내가 찾고 있는 물건" index={1}/>
@@ -30,7 +26,6 @@ const Container = styled.main`
   position: relative;
   min-height: 100vh;
   display: block;
-  padding: calc(3.5vw + 5px); 
   background-attachment: fixed; 
 
 

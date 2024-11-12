@@ -10,14 +10,16 @@ import MyPage from "./pages/MyPage";
 import { Outlet, Route, Routes } from 'react-router-dom';
 import FindID from './pages/LoginPage/FindID';
 import FindPass from './pages/LoginPage/FindPass';
+import styled from 'styled-components';
+import Nav from './components/Nav';
+
 
 const Layout =() => {
   return(
-    <div>
-   
-     
+    <Container>
+      <Nav />
       <Outlet/>
-    </div>
+    </Container>
   )
 }
 function App() {
@@ -45,3 +47,10 @@ function App() {
 }
 
 export default App;
+
+const Container = styled.div`
+  display : flex;
+  width : 100vw;
+  justify-content : center;
+  align-items : center;
+`

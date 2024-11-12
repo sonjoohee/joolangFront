@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons"; // 라인 아이콘 임포트
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
+
 const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Jalnan';
@@ -51,7 +52,7 @@ const Nav = () => {
   };
 
   const MyPageButtonClick = () => {
-    navigate('/MyPage'); 
+    navigate("/MyPage");
   };
 
   const GlobalStyle = createGlobalStyle`
@@ -65,13 +66,8 @@ const Nav = () => {
 
 `;
 
-
-
-
-
-
   return (
-    <>
+    <Container>
       <NavWrapper>
         <>
           <GlobalStyle />
@@ -106,53 +102,48 @@ const Nav = () => {
           <UserAction>고객센터</UserAction>
         </UserActions>
 
-      
-      <NavItems>
-        <NavItem onClick={productClick}>중고물품</NavItem>
-        <NavItem onClick={writeButtonClick}>게시글 작성</NavItem>
-        <NavItem>이벤트</NavItem>
-        <NavItem>커뮤니티</NavItem>
-        <NavItem>고객센터</NavItem>
-      </NavItems>
-
-      <UserActions>
-        <UserAction onClick={logAddButtonClick}>로그인</UserAction>
-        <UserAction onClick={signAddButtonClick}>회원가입</UserAction>
-        <UserAction>고객센터</UserAction>
-      </UserActions>
-
-
-      <UserIcons>
-        <UserIcon className="comment">
-          <FontAwesomeIcon  onClick={ChatButtonClick} icon={regularComment} style={{ fontSize: '28px', lineHeight: '1.2' }} />
-          <span>채팅</span>
-        </UserIcon>
-        <UserIcon className="shop">
-          <FontAwesomeIcon icon={faShoppingCart} style={{ fontSize: '28px', lineHeight: '1.2' }} />
-          <span>장바구니</span>
-        </UserIcon>
-        <UserIcon className="user">
-          <FontAwesomeIcon onClick={MyPageButtonClick} icon={regularUser} style={{ fontSize: '28px', lineHeight: '1.2' }} />
-          <span>마이페이지</span>
-        </UserIcon>
-      </UserIcons>
-     
-    </NavWrapper>
-
-  
-
-    
-    
-    </>
+        <UserIcons>
+          <UserIcon className="comment">
+            <FontAwesomeIcon
+              onClick={ChatButtonClick}
+              icon={regularComment}
+              style={{ fontSize: "28px", lineHeight: "1.2" }}
+            />
+            <span>채팅</span>
+          </UserIcon>
+          <UserIcon className="shop">
+            <FontAwesomeIcon
+              icon={faShoppingCart}
+              style={{ fontSize: "28px", lineHeight: "1.2" }}
+            />
+            <span>장바구니</span>
+          </UserIcon>
+          <UserIcon className="user">
+            <FontAwesomeIcon
+              onClick={MyPageButtonClick}
+              icon={regularUser}
+              style={{ fontSize: "28px", lineHeight: "1.2" }}
+            />
+            <span>마이페이지</span>
+          </UserIcon>
+        </UserIcons>
+      </NavWrapper>
+    </Container>
   );
 };
+
+
+const Container = styled.div`
+  background-color : white;
+  justify-content : center;
+`;
 
 const NavWrapper = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  // height: calc(20vh);
+  width : 80%;
   height: 180px;
   background-color: #ffffff;
   display: flex;
@@ -160,6 +151,7 @@ const NavWrapper = styled.nav`
   align-items: center;
   z-index: 3;
   border-bottom: solid 1px #d4d4d4;
+  padding : 0%;
 `;
 
 const Logo = styled.div`
@@ -178,7 +170,7 @@ const Logo = styled.div`
 
   span {
     font-size: 32px;
-    color: #6AB2E1; 
+    color: #6ab2e1;
     // font-weight: bold;
     font-family: "Jalnan";
   }
@@ -230,11 +222,9 @@ const SearchIcon = styled.span`
 
 const NavItems = styled.div`
   display: flex;
-  flex-wrap: nowrap;
-  position: absolute;
   top: 130px;
   border-top: solid 1px #d4d4d4;
-  width: 100vw;
+  width : 100%;
   padding: 12px 0px;
   justify-content: space-between;
   align-items: center;
@@ -299,21 +289,18 @@ const UserIcon = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-   margin: 0 17px;
+  margin: 0 17px;
   cursor: pointer;
 
   span {
-    font-size: 15px; 
+    font-size: 15px;
     color: #333;
-    margin-top: 8px; 
+    margin-top: 8px;
   }
 
   &:hover {
-    color: #6AB2E1;
+    color: #6ab2e1;
   }
 `;
 
 export default Nav;
-
-
-
