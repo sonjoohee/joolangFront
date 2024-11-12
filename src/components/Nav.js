@@ -10,7 +10,6 @@ import {
 } from "@fortawesome/free-regular-svg-icons"; // 라인 아이콘 임포트
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
-
 const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Jalnan';
@@ -132,18 +131,18 @@ const Nav = () => {
   );
 };
 
-
 const Container = styled.div`
-  background-color : white;
-  justify-content : center;
+  display: flex; // flexbox 사용
+  justify-content: center; // 가로 중앙 정렬
+  width: 100%; // 전체 너비
+  align-items: center; // 세로 중앙 정렬
+  height: 180px; // NavWrapper와 동일한 높이
+  background-color: white;
 `;
 
 const NavWrapper = styled.nav`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width : 80%;
+  width: 100%; // 너비를 80%로 설정
   height: 180px;
   background-color: #ffffff;
   display: flex;
@@ -151,7 +150,8 @@ const NavWrapper = styled.nav`
   align-items: center;
   z-index: 3;
   border-bottom: solid 1px #d4d4d4;
-  padding : 0%;
+  padding: 0;
+
 `;
 
 const Logo = styled.div`
@@ -224,7 +224,8 @@ const NavItems = styled.div`
   display: flex;
   top: 130px;
   border-top: solid 1px #d4d4d4;
-  width : 100%;
+  width: 100%;
+  position: absolute;
   padding: 12px 0px;
   justify-content: space-between;
   align-items: center;
@@ -271,7 +272,6 @@ const UserAction = styled.div`
   font-size: 16px;
   color: #aaa;
   cursor: pointer;
-
   &:hover {
     color: #6ab2e1;
     font-weight: bold;

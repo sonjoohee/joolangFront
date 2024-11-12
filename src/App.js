@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import MainPage from "./pages/MainPage";
 import WritePage from "./pages/WritePage";
 import ProductPage from "./pages/ProductPage";
@@ -7,29 +7,26 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ChatPage from "./pages/ChatPage";
 import MyPage from "./pages/MyPage";
-import { Outlet, Route, Routes } from 'react-router-dom';
-import FindID from './pages/LoginPage/FindID';
-import FindPass from './pages/LoginPage/FindPass';
-import Nav from './components/Nav';
-import styled from 'styled-components';
+import { Outlet, Route, Routes } from "react-router-dom";
+import FindID from "./pages/LoginPage/FindID";
+import FindPass from "./pages/LoginPage/FindPass";
+import Nav from "./components/Nav";
+import styled from "styled-components";
 
 const Layout = () => {
   return (
-    <div>
-     
-        <Nav />
-  
+    <Container>
       <Outlet />
-    </div>
+    </Container>
   );
-}
+};
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element = {<MainPage />}/>
+          <Route index element={<MainPage />} />
           <Route path="loginpage" element={<LoginPage />} />
           <Route path="signuppage" element={<SignupPage />} />
           <Route path="writepage" element={<WritePage />} />
@@ -47,15 +44,13 @@ function App() {
 
 export default App;
 
-// const Container = styled.section`
-// // overflow:hidden;
-// display:flex;
-// flex-direction: column;
-// text-align: center;
-// width: 100vw;  
-// height: 100vh;
-// // padding: 0px auto;
-// padding: 20px 0px;
-// `;
-
-
+const Container = styled.section`
+  // overflow:hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  // padding: 0px auto;
+  padding: 20px 0px;
+`;
