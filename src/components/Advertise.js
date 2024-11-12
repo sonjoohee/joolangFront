@@ -14,5 +14,5 @@ export default Advertise;
 
 
 const Ad = styled.div`
-  margin-top: 300px; /* 네비게이션 바와의 간격 조정 */
+  margin-top: 100px; /* 네비게이션 바와의 간격 조정 */
 `;

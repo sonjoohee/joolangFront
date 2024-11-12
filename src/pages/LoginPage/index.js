@@ -18,11 +18,9 @@ const LoginPage = () => {
 
 
     try {
-      const response = await axios.post(`http://localhost:8080/home/login`, null, {
-        params: {
-          userId: userId,
-          password: password, 
-        },
+      const response = await axios.post(`http://localhost:8080/home/login`, {
+        userId: userId,
+        password: password, 
       });
 
       if (response.status === 200) {

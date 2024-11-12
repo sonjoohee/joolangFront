@@ -102,16 +102,25 @@ const WritePage = () => {
 
 export default WritePage;
 
-// Styled Components
+
 const Container = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // height: 100vh;
+  // padding: 20px;
+  // width: 100%;
+  // margin-top: 180px;
+
+
+   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 20px;
   width: 100%;
-  margin-top: 180px;
+  top: 200px;
 `;
 
 const Title = styled.h1`

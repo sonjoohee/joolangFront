@@ -1,5 +1,4 @@
 import React from 'react'
-import Nav from "../../components/Nav"; /* .. : 두 개의 ..는 두 단계 위의 디렉토리를 나타냄 */
 import styled from "styled-components";
 import Row from '../../components/Row';
 import Advertise from '../../components/Advertise';
@@ -10,8 +9,7 @@ const MainPage = () => {
   return (
  
     
-    <Container>
-      <Nav />
+    <Container> 
 
       <Rows>
         <Row title="Hot한 중고물품 득템하기!"  index={0}/>
@@ -29,9 +27,11 @@ export default MainPage;
 const Container = styled.main`
   position: relative;
   min-height: 100vh;
-  display: block;
-  padding: calc(3.5vw + 5px); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-attachment: fixed; 
+  margin-top: 55%;
 
 
 
@@ -39,10 +39,11 @@ const Container = styled.main`
     background: url("/images/BG.png") center center / contain no-repeat fixed;
     content: "";
     position: absolute;
-    min-height: 100vh;
+    min-height: 100%;
     inset: 0; 
     opacity: 1;
-    transform: translatey(-55vh);
+    transform: translateY(-1100px);
+    margin-top: 100px;
     
 
   
@@ -53,7 +54,7 @@ const Container = styled.main`
 
 
 const Rows = styled.div`
-  margin-top: 900px; 
+  width: 100%;
 `;
 
 
