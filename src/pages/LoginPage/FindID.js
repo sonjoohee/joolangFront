@@ -3,17 +3,29 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Nav from "../../components/Nav";
-import FindPass from './FindPass';
 
 const FindID = () => {
-  const [name, setName] = useState(''); 
-  const [phoneNumber, setPhoneNumber] = useState('');
-
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState(''); // 아이디 반환 메시지 상태 추가
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/find-id', {
+        email,
+      });
+
+      if (response.data.id) {
+        setMessage(`찾은 아이디: ${response.data.id}`); // 아이디 반환
+      } else {
+        setMessage('해당 이메일에 연결된 아이디가 없습니다.');
+      }
+    } catch (error) {
+      console.error('아이디 찾기 실패:', error);
+      setMessage('아이디 찾기 중 오류가 발생했습니다.');
+    }
   };
 
   const handleAddButtonClick = () => {
@@ -28,25 +40,17 @@ const FindID = () => {
       <Form onSubmit={handleSubmit}>
         <InputContainer>
           <Input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="이름"
-            required
-          />
-        </InputContainer>
-
-        <InputContainer>
-          <Input
-            type="text"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            placeholder="전화번호"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="이메일"
             required
           />
         </InputContainer>
 
         <Button type="submit">찾기</Button>
+
+        {message && <Message>{message}</Message>} {/* 아이디 반환 메시지 표시 */}
 
         <LinkContainer>
           <Link onClick={() => navigate('/find-pass')}>비밀번호 찾기</Link>
@@ -122,10 +126,14 @@ const Input = styled.input`
 `;
 
 
+
+
+
+
 const Button = styled.button`
   padding: 12px;
   width: 130px;
-  height: 100px;
+  height: 45px;
   background-color:  #6AB2E1;
   color: white;
   border: none;
@@ -133,15 +141,17 @@ const Button = styled.button`
   cursor: pointer;
   margin-bottom: 10px;
   margin-left: 10px;
-  font-size:20px;
+  font-size:18px;
   font-weight:bold;
-  transform: translate(315px,-108px);;
+  transform: translate(315px,-53px);
 
 
   &:hover {
     background-color: #0056b3;
   }
 `;
+
+
 
 const LinkContainer = styled.div`
   display: flex;
@@ -152,7 +162,7 @@ const LinkContainer = styled.div`
   background-color: #f2f2f2; 
   border-radius: 1px;
   padding: 30px;
-  transform: translatey(-75px);
+  margin-top: 20px;
 
 `;
 
@@ -214,4 +224,10 @@ const Button2 = styled.button`
   &:hover {
     background-color: #e0e0e0;
   }
+`;
+
+const Message = styled.p`
+  color: blue; // 혹은 red로 오류 메시지에 따라 스타일 조정 가능
+  margin-bottom: 20px;
+  margin-top: -10px;
 `;

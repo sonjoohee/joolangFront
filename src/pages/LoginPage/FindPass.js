@@ -7,13 +7,48 @@ import FindID from './FindID';
 
 const FindPass = () => {
   const [userId, setUserId] = useState(''); 
+  const [email, setEmail] = useState(''); 
+  const [verificationCode, setVerificationCode] = useState('');
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+        const response = await axios.get(`http://localhost:8080/home/verifyCode/password`, {
+            params: {
+                userId: userId,
+                email: email,
+                type: 'userId'
+            }
+        });
 
-  };
+        if (response.status === 200) {
+            setVerificationCode(response.data.verificationCode);
+        }
+    } catch (error) {
+        let errorMessage;
+
+        if (error.response) {
+            // 서버가 응답했지만, 상태 코드가 2xx가 아닌 경우
+            if (error.response.status >= 400 && error.response.status < 500) {
+                errorMessage = '클라이언트 오류: ' + (error.response.data?.message || '잘못된 요청입니다.');
+            } else if (error.response.status >= 500) {
+                errorMessage = '서버 오류: ' + (error.response.data?.message || '서버에서 문제가 발생했습니다.');
+            }
+        } else if (error.request) {
+            // 요청이 이루어졌으나, 응답이 없는 경우
+            errorMessage = '네트워크 오류: 서버에 연결할 수 없습니다.';
+        } else {
+            // 요청을 설정하는 중에 발생한 오류
+            errorMessage = '오류: ' + error.message;
+        }
+
+        console.error('Error:', errorMessage);
+        alert(errorMessage);
+    }
+};
+
 
   const handleAddButtonClick = () => {
     navigate('/SignupPage'); 
@@ -35,8 +70,20 @@ const FindPass = () => {
           />
         </InputContainer>
 
+        <InputContainer>
+          <Input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="이메일"
+            required
+          />
+        </InputContainer>
+
 
         <Button type="submit">찾기</Button>
+
+        {verificationCode && <p>인증 코드: {verificationCode}</p>}
 
         <LinkContainer>
           <Link onClick={() => navigate('/find-id')}>아이디 찾기</Link>
@@ -100,7 +147,7 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 12px;
   width: 130px;
-  height: 45px;
+  height: 100px;
   background-color:  #6AB2E1;
   color: white;
   border: none;
@@ -108,9 +155,9 @@ const Button = styled.button`
   cursor: pointer;
   margin-bottom: 10px;
   margin-left: 10px;
-  font-size:18px;
+  font-size:20px;
   font-weight:bold;
-  transform: translate(315px,-53px);
+  transform: translate(315px,-108px);;
 
 
   &:hover {
@@ -127,6 +174,7 @@ const LinkContainer = styled.div`
   background-color: #f2f2f2; 
   border-radius: 1px;
   padding: 30px;
+  transform: translatey(-75px);
 
 `;
 

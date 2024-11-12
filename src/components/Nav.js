@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ import {
   faUser as regularUser,
 } from "@fortawesome/free-regular-svg-icons"; // 라인 아이콘 임포트
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { getToken, removeToken } from "../api/auth.js"; // Adjust the path as necessary
+
 
 const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -18,9 +20,17 @@ const GlobalStyle = createGlobalStyle`
   font-style: normal;
 }
 `;
+
 const Nav = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 로그인 상태 확인
+    const token = getToken(); // auth.js에서 토큰 가져오기
+    setIsLoggedIn(!!token); // 토큰이 있으면 로그인 상태 true
+  }, []);
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
@@ -54,21 +64,11 @@ const Nav = () => {
     navigate('/MyPage'); 
   };
 
-  const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'Jalnan';
-    src: url('/fonts/JalnanGothicTTF.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-
-`;
-
-
-
-
-
+  const handleLogout = () => { // 로그아웃 함수
+    removeToken(); // auth.js에서 토큰 삭제
+    setIsLoggedIn(false); // 로그인 상태 업데이트
+    navigate("/"); // 홈으로 리디렉션
+  };
 
   return (
     <>
@@ -101,48 +101,36 @@ const Nav = () => {
         </NavItems>
 
         <UserActions>
-          <UserAction onClick={logAddButtonClick}>로그인</UserAction>
-          <UserAction onClick={signAddButtonClick}>회원가입</UserAction>
-          <UserAction>고객센터</UserAction>
+          {isLoggedIn ? ( // 로그인 상태에 따라 버튼 표시
+            <>
+              <UserAction onClick={handleLogout}>로그아웃</UserAction>
+              <UserAction onClick={MyPageButtonClick}>마이페이지</UserAction>
+
+            </>
+          ) : (
+            <>
+              <UserAction onClick={logAddButtonClick}>로그인</UserAction>
+              <UserAction onClick={signAddButtonClick}>회원가입</UserAction>
+              <UserAction onClick={logAddButtonClick}>마이페이지</UserAction>
+            </>
+          )}
         </UserActions>
 
-      
-      <NavItems>
-        <NavItem onClick={productClick}>중고물품</NavItem>
-        <NavItem onClick={writeButtonClick}>게시글 작성</NavItem>
-        <NavItem>이벤트</NavItem>
-        <NavItem>커뮤니티</NavItem>
-        <NavItem>고객센터</NavItem>
-      </NavItems>
-
-      <UserActions>
-        <UserAction onClick={logAddButtonClick}>로그인</UserAction>
-        <UserAction onClick={signAddButtonClick}>회원가입</UserAction>
-        <UserAction>고객센터</UserAction>
-      </UserActions>
-
-
-      <UserIcons>
-        <UserIcon className="comment">
-          <FontAwesomeIcon  onClick={ChatButtonClick} icon={regularComment} style={{ fontSize: '28px', lineHeight: '1.2' }} />
-          <span>채팅</span>
-        </UserIcon>
-        <UserIcon className="shop">
-          <FontAwesomeIcon icon={faShoppingCart} style={{ fontSize: '28px', lineHeight: '1.2' }} />
-          <span>장바구니</span>
-        </UserIcon>
-        <UserIcon className="user">
-          <FontAwesomeIcon onClick={MyPageButtonClick} icon={regularUser} style={{ fontSize: '28px', lineHeight: '1.2' }} />
-          <span>마이페이지</span>
-        </UserIcon>
-      </UserIcons>
-     
-    </NavWrapper>
-
-  
-
-    
-    
+        <UserIcons>
+          <UserIcon className="comment">
+            <FontAwesomeIcon onClick={ChatButtonClick} icon={regularComment} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+            <span>채팅</span>
+          </UserIcon>
+          <UserIcon className="shop">
+            <FontAwesomeIcon icon={faShoppingCart} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+            <span>장바구니</span>
+          </UserIcon>
+          <UserIcon className="user">
+            <FontAwesomeIcon onClick={MyPageButtonClick} icon={regularUser} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+            <span>마이페이지</span>
+          </UserIcon>
+        </UserIcons>
+      </NavWrapper>
     </>
   );
 };
@@ -200,7 +188,7 @@ const SearchInput = styled.input`
   font-size: 16px;
 
   &::placeholder {
-    /*& -> 현재 적용���는 부분 언급 */
+    /*& -> 현재 적용되는 부분 언급 */
     color: #aaa;
   }
 

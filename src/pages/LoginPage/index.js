@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { login, logout } from '../../api/auth'; // API 함수 임포트
 import Nav from "../../components/Nav";
 import FindID from './FindID';
 import FindPass from './FindPass';
@@ -16,20 +16,13 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     try {
-      const response = await axios.post(`http://localhost:8080/home/login`, {
-        userId: userId,
-        password: password, 
-      });
+      const response = await login(userId, password); // API 호출
 
-      if (response.status === 200) {
-        console.log('로그인 성공:', response.data);
-        
-        // JWT 토큰을 localStorage에 저장
-        localStorage.setItem('jwtToken', response.data.token); 
-        
-        // 메인 페이지로 가는거/
+      if (response.token) {
+        console.log('로그인 성공:', response);
+        // JWT 토큰을 로컬 스토리지에 저장하여 사용자의 인증 상태를 유지
+        localStorage.setItem('jwtToken', response.token); 
         navigate('/');
       }
     } catch (error) {
@@ -45,6 +38,7 @@ const LoginPage = () => {
       console.log('로그인 실패 후 사용자는 로그인 페이지에 머무릅니다.');
     }
   };
+
 
   const handleAddButtonClick = () => {
     navigate('/SignupPage'); 
