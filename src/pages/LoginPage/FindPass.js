@@ -107,7 +107,7 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 12px;
   width: 130px;
-  height: 100px;
+  height: 45px;
   background-color:  #6AB2E1;
   color: white;
   border: none;
@@ -115,9 +115,9 @@ const Button = styled.button`
   cursor: pointer;
   margin-bottom: 10px;
   margin-left: 10px;
-  font-size:20px;
+  font-size:18px;
   font-weight:bold;
-  transform: translate(315px,-108px);;
+  transform: translate(315px,-53px);
 
 
   &:hover {
@@ -134,7 +134,6 @@ const LinkContainer = styled.div`
   background-color: #f2f2f2; 
   border-radius: 1px;
   padding: 30px;
-  transform: translatey(-75px);
 
 `;
 
