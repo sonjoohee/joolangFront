@@ -7,13 +7,13 @@ import FindID from './FindID';
 
 const FindPass = () => {
   const [userId, setUserId] = useState(''); 
-
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    // Add your form submission logic here
   };
 
   const handleAddButtonClick = () => {
@@ -54,6 +54,12 @@ const FindPass = () => {
 export default FindPass;
 
 const Container = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // height: 100%;
+  // margin-top:20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,11 +81,14 @@ const Form = styled.form`
   margin-top:20px;
   width: 100%;
   max-width: 400px; 
-//   transform: translatex(-20px);
+  transform: translatex(-20px);
 
 `;
 
 const InputContainer = styled.div`
+
+
+
 
 `;
 
@@ -98,7 +107,7 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 12px;
   width: 130px;
-  height: 50px;
+  height: 100px;
   background-color:  #6AB2E1;
   color: white;
   border: none;
@@ -106,9 +115,9 @@ const Button = styled.button`
   cursor: pointer;
   margin-bottom: 10px;
   margin-left: 10px;
-  font-size:18px;
+  font-size:20px;
   font-weight:bold;
-  transform: translate(315px,-55px);;
+  transform: translate(315px,-108px);;
 
 
   &:hover {
@@ -125,6 +134,7 @@ const LinkContainer = styled.div`
   background-color: #f2f2f2; 
   border-radius: 1px;
   padding: 30px;
+  transform: translatey(-75px);
 
 `;
 
@@ -142,5 +152,43 @@ const Divider = styled.span`
   color: #ccc; 
 `;
 
+const SocialLoginSection = styled.div`
+  text-align: center;
+  margin-top: 20px; 
+  width: 100%; 
+  max-width: 400px;
+`;
 
+const SocialLogin = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
+const DividerLine = styled.hr`
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    flex: 1; 
+    margin: 0 10px; 
+
+`;
+
+const SocialLoginTitle = styled.h2`
+  font-size: 20px;
+  margin: 10px 0;
+`;
+
+const Button2 = styled.button`
+  padding: 10px;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+  background-color: white;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+`;
