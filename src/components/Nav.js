@@ -153,7 +153,7 @@ const NavWrapper = styled.nav`
   left: 0;
   right: 0;
   // height: calc(20vh);
-  height: 170px;
+  height: 180px;
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
@@ -232,7 +232,7 @@ const NavItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   position: absolute;
-  top: 120px;
+  top: 130px;
   border-top: solid 1px #d4d4d4;
   width: 100vw;
   padding: 12px 0px;
