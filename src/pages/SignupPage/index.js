@@ -40,7 +40,7 @@ const SignupPage = () => {
       // 인증번호 발송 완료 팝업창
       alert('인증번호가 발송되었습니다.');
 
-      navigate('/MainPage'); 
+      navigate('/'); 
     } catch (error) {
       console.error('회원가입 실패:', error?.response?.data || error.message);
       alert('회원가입에 실패했습니다. 다시 시도해주세요.');
@@ -180,10 +180,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 20px;
-  margin-bottom:200px;
-  margin-top:10vh;
+  min-height: calc(100vh - 200px);
+  margin-top:200px;
 
 `;
 

@@ -32,7 +32,7 @@ const LoginPage = () => {
         localStorage.setItem('jwtToken', response.data.token); 
         
         // 메인 페이지로 가는거/
-        navigate('/MainPage');
+        navigate('/');
       }
     } catch (error) {
       if (error.response && error.response.data) {
