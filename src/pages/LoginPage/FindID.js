@@ -228,4 +228,3 @@ const Button2 = styled.button`
     background-color: #e0e0e0;
   }
 `;
-
