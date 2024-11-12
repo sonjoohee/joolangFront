@@ -121,24 +121,6 @@ const Input = styled.input`
  
 `;
 
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  transform: translatey(-100px);
-  
-
-
-
-`;
-
-const Checkbox = styled.input`
-  margin-right: 5px;
-  
-`;
-
-const CheckboxLabel = styled.label`
-  font-size: 14px;
-`;
 
 const Button = styled.button`
   padding: 12px;
