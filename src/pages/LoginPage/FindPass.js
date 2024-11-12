@@ -7,13 +7,12 @@ import FindID from './FindID';
 
 const FindPass = () => {
   const [userId, setUserId] = useState(''); 
-  const [phoneNumber, setPhoneNumber] = useState('');
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
+
   };
 
   const handleAddButtonClick = () => {
@@ -54,12 +53,6 @@ const FindPass = () => {
 export default FindPass;
 
 const Container = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // height: 100%;
-  // margin-top:20%;
   display: flex;
   flex-direction: column;
   align-items: center;

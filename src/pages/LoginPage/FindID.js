@@ -198,13 +198,18 @@ const SocialLoginTitle = styled.h2`
 `;
 
 const Button2 = styled.button`
-  padding: 10px;
+  padding: 30px;
   color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 5px;
-  background-color: white;
+  background-color: #EAEAEA;
+  width: 400px;
+  font-size: 16px;
+  font-weight: bold;
+
+;
 
   &:hover {
     background-color: #e0e0e0;
