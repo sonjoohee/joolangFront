@@ -50,9 +50,25 @@ const Nav = () => {
     navigate("/ChatPage");
   };
 
-  const myPageClick = () => {
-    navigate("/MyPage");
+  const MyPageButtonClick = () => {
+    navigate('/MyPage'); 
   };
+
+  const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Jalnan';
+    src: url('/fonts/JalnanGothicTTF.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+`;
+
+
+
+
+
 
   return (
     <>
@@ -61,7 +77,7 @@ const Nav = () => {
           <GlobalStyle />
           <Logo onClick={() => (window.location.href = "/")}>
             <span>주랑</span>
-            <img alt="logo" src="/images/logo.svg" />
+            <img alt="logo" src="/images/logo.png" />
           </Logo>
         </>
 
@@ -90,32 +106,43 @@ const Nav = () => {
           <UserAction>고객센터</UserAction>
         </UserActions>
 
-        <UserIcons>
-          <UserIcon className="comment">
-            <FontAwesomeIcon
-              onClick={ChatButtonClick}
-              icon={regularComment}
-              style={{ fontSize: "28px", lineHeight: "1.2" }}
-            />
-            <span>채팅</span>
-          </UserIcon>
-          <UserIcon className="shop">
-            <FontAwesomeIcon
-              icon={faShoppingCart}
-              style={{ fontSize: "28px", lineHeight: "1.2" }}
-            />
-            <span>장바구니</span>
-          </UserIcon>
-          <UserIcon className="user">
-            <FontAwesomeIcon
-              onClick={myPageClick}
-              icon={regularUser}
-              style={{ fontSize: "28px", lineHeight: "1.2" }}
-            />
-            <span>마이페이지</span>
-          </UserIcon>
-        </UserIcons>
-      </NavWrapper>
+      
+      <NavItems>
+        <NavItem onClick={productClick}>중고물품</NavItem>
+        <NavItem onClick={writeButtonClick}>게시글 작성</NavItem>
+        <NavItem>이벤트</NavItem>
+        <NavItem>커뮤니티</NavItem>
+        <NavItem>고객센터</NavItem>
+      </NavItems>
+
+      <UserActions>
+        <UserAction onClick={logAddButtonClick}>로그인</UserAction>
+        <UserAction onClick={signAddButtonClick}>회원가입</UserAction>
+        <UserAction>고객센터</UserAction>
+      </UserActions>
+
+
+      <UserIcons>
+        <UserIcon className="comment">
+          <FontAwesomeIcon  onClick={ChatButtonClick} icon={regularComment} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+          <span>채팅</span>
+        </UserIcon>
+        <UserIcon className="shop">
+          <FontAwesomeIcon icon={faShoppingCart} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+          <span>장바구니</span>
+        </UserIcon>
+        <UserIcon className="user">
+          <FontAwesomeIcon onClick={MyPageButtonClick} icon={regularUser} style={{ fontSize: '28px', lineHeight: '1.2' }} />
+          <span>마이페이지</span>
+        </UserIcon>
+      </UserIcons>
+     
+    </NavWrapper>
+
+  
+
+    
+    
     </>
   );
 };
@@ -125,7 +152,8 @@ const NavWrapper = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  height: calc(20vh);
+  // height: calc(20vh);
+  height: 170px;
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
@@ -144,11 +172,13 @@ const Logo = styled.div`
     width: 40px;
     height: auto;
     margin-right: 10px;
+    margin-top: -10px;
+    margin-left: 5px;
   }
 
   span {
     font-size: 32px;
-    color: #6ab2e1; /* 로고 색상 */
+    color: #6AB2E1; 
     // font-weight: bold;
     font-family: "Jalnan";
   }
@@ -170,8 +200,20 @@ const SearchInput = styled.input`
   font-size: 16px;
 
   &::placeholder {
-    /*& -> 현재 적용되는 부분 언급 */
+    /*& -> 현재 적용���는 부분 언급 */
     color: #aaa;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 8px;
   }
 `;
 
@@ -190,7 +232,7 @@ const NavItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   position: absolute;
-  top: 75%;
+  top: 120px;
   border-top: solid 1px #d4d4d4;
   width: 100vw;
   padding: 12px 0px;
@@ -255,26 +297,20 @@ const UserIcons = styled.div`
 `;
 const UserIcon = styled.div`
   display: flex;
-  flex-direction: column; /* 세로 정렬 */
-  align-items: center; /* 가운데 정렬 */
-  margin: 0 17px;
+  flex-direction: column;
+  align-items: center;
+   margin: 0 17px;
   cursor: pointer;
 
   span {
-    font-size: 15px; /* 텍스트 크기 조정 */
-    color: #333; /* 텍스트 색상 */
-    margin-top: 8px; /* 아이콘과 텍스트 간격 */
+    font-size: 15px; 
+    color: #333;
+    margin-top: 8px; 
   }
 
   &:hover {
-    color: #6ab2e1; /* 호버 시 색상 변경 */
+    color: #6AB2E1;
   }
 `;
 
 export default Nav;
-
-// // Styled component for FontAwesomeIcon
-// const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
-//   font-size: 24px; /* 아이콘 크기 */
-//   line-height: 1.2; /* 줄 높이 */
-// `;
