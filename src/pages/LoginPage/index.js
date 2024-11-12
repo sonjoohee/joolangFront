@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Nav from "../../components/Nav";
+import FindID from './FindID';
+import FindPass from './FindPass';
+
 
 const LoginPage = () => {
   const [userId, setUserId] = useState(''); 
@@ -29,11 +32,19 @@ const LoginPage = () => {
         localStorage.setItem('jwtToken', response.data.token); 
         
         // 메인 페이지로 가는거/
-        navigate('/MainPage');
+        navigate('/');
       }
     } catch (error) {
-      console.error('로그인 실패:', error.response.data);
-      alert('로그인에 실패하였습니다. 아이디와 비밀번호를 확인하세요.');
+      if (error.response && error.response.data) {
+        console.error('로그인 실패:', error.response.data);
+        alert('로그인에 실패하였습니다. 아이디와 비밀번호를 확인하세요.');
+      } else {
+        console.error('로그인 실패: 서버에 연결할 수 없습니다.');
+        alert('로그인에 실패하였습니다. 서버에 연결할 수 없습니다.');
+      }
+      
+      // 사용자는 기본적으로 로그인 페이지에 남아 있습니다.
+      console.log('로그인 실패 후 사용자는 로그인 페이지에 머무릅니다.');
     }
   };
 
@@ -95,9 +106,9 @@ const LoginPage = () => {
         </CheckboxContainer>
 
         <LinkContainer>
-          <Link>아이디 찾기</Link>
+          <Link onClick={() => navigate('/find-id')}>아이디 찾기</Link>
           <Divider>|</Divider>
-          <Link>비밀번호 찾기</Link>
+          <Link onClick={() => navigate('/find-pass')}>비밀번호 찾기</Link>
           <Divider>|</Divider>
           <Link onClick={handleAddButtonClick}>회원가입</Link>
         </LinkContainer>
@@ -122,12 +133,18 @@ export default LoginPage;
 
 
 const Container = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // height: 100%;
+  // margin-top:20%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin-top:2vh;
+  min-height: calc(100vh - 200px);
+  margin-top:200px;
 
 `;
 

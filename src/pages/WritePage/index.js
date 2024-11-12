@@ -123,8 +123,8 @@ const DividerLine = styled.hr`
   border: 2;
   height: 1px;
   background: #ccc;
-  width: 800px; /* 전체 너비 사용 */
-  margin: 10px 0; /* 상하 여백 */
+  width: 800px;
+  margin: 10px 0;
 `;
 
 const Form = styled.form`
@@ -232,14 +232,14 @@ const RemoveButton = styled.button`
 
 const ButtonContainer = styled.div`
   display: flex;
-  margin-top: 30px; /* 상단 여백 추가 */
+  margin-top: 30px; 
   gap: 10px;
   justify-content: flex-end;
   margin-bottom: 50px;
 `;
 
 const Button = styled.button`
-  padding: 12px 20px; /* 버튼 패딩 */
+  padding: 12px 20px;
   width: 150px;
   background-color: #6AB2E1;
   color: white;

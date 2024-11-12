@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import MainPage from "./pages/MainPage";
 import WritePage from "./pages/WritePage";
@@ -9,13 +8,14 @@ import SignupPage from "./pages/SignupPage";
 import ChatPage from "./pages/ChatPage";
 import MyPage from "./pages/MyPage";
 import { Outlet, Route, Routes } from 'react-router-dom';
-
+import FindID from './pages/LoginPage/FindID';
+import FindPass from './pages/LoginPage/FindPass';
 
 const Layout =() => {
   return(
     <div>
    
-
+     
       <Outlet/>
     </div>
   )
@@ -26,13 +26,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element = {<MainPage />}/>
-          <Route path="LoginPage" element={<LoginPage />} />
-          <Route path="SignupPage" element={<SignupPage />} />
-          <Route path="WritePage" element={<WritePage />} />
-          <Route path="ProductPage" element={<ProductPage />} />
-          <Route path="SearchPage" element={<SearchPage />} />
-          <Route path="ChatPage" element={<ChatPage />} />
-          <Route path="MyPage" element={<MyPage />} />
+          <Route path="loginpage" element={<LoginPage />} />
+          <Route path="signuppage" element={<SignupPage />} />
+          <Route path="writepage" element={<WritePage />} />
+          <Route path="productpage" element={<ProductPage />} />
+          <Route path="searchpage" element={<SearchPage />} />
+          <Route path="chatpage" element={<ChatPage />} />
+          <Route path="mypage" element={<MyPage />} />
+          <Route path="find-id" element={<FindID />} />
+          <Route path="find-pass" element={<FindPass />} />
       </Route>
       </Routes>
 
@@ -40,6 +42,6 @@ function App() {
       
     </div>
   );
-};
+}
 
 export default App;

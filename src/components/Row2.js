@@ -171,17 +171,17 @@ const Indicators = styled.div`
 `;
 
 const Indicator = styled.div`
-  width: 15px; // 기본 막대 길이
-  height: 8px; // 기본 막대 높이
-  border-radius: 14px; // 둥근 모서리
-  background: #D2E8F6; // 비활성 상태 색상
+  width: 15px; 
+  height: 8px; 
+  border-radius: 14px; 
+  background: #D2E8F6;
   margin: 0 5px;
-  transition: width 0.3s, background 0.3s; // 너비와 배경색 전환
+  transition: width 0.3s, background 0.3s; 
 
-  // 활성화된 페이지에 대한 스타일
+
   ${({ active }) => active && `
-    width: 40px; // 현재 페이지 점의 길이
-    background: #6AB2E1; // 강조 색상
+    width: 40px;
+    background: #6AB2E1;
   `}
 `;
 

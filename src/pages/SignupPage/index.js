@@ -18,7 +18,7 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 최종적ㅇ로 서버에 전송될 것
+    // 최종적으로 서버에 전송될 것
     const signupData = {
       username, 
       password, 
@@ -35,12 +35,16 @@ const SignupPage = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/home/joinProc', signupData);
-      console.log('회원가입 성공:', response.data);
+      console.log('회원가입 성공:', response?.data);
 
-      navigate('/MainPage'); 
+      // 인증번호 발송 완료 팝업창
+      alert('인증번호가 발송되었습니다.');
+
+      navigate('/'); 
     } catch (error) {
-      console.error('회원가입 실패:', error.response.data);
-    
+      console.error('회원가입 실패:', error?.response?.data || error.message);
+      alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+      navigate('/SignupPage'); // 실패 시 회원가입 페이지로 다시 이동
     }
   };
 
@@ -48,10 +52,9 @@ const SignupPage = () => {
     try {
       const response = await axios.post(`http://localhost:8080/home/sendSmsProc?phoneNumber=${phone}`);
       console.log('인증번호 발송 성공:', response.data);
-      
+      alert('인증번호가 발송되었습니다.');
     } catch (error) {
       console.error('인증번호 발송 실패:', error.response.data);
-    
     }
   };
 
@@ -59,10 +62,37 @@ const SignupPage = () => {
     try {
       const response = await axios.get(`http://localhost:8080/home/checkProc?verifyCode=${authCode}&phoneNumber=${phone}`);
       console.log('인증 성공:', response.data);
-      
+      alert('인증이 성공적으로 완료되었습니다.');
     } catch (error) {
       console.error('인증 실패:', error.response.data);
-      
+    }
+  };
+
+  const handleCheckId = async () => {
+    if (!username) {
+      alert('아이디를 입력하세요.');
+      return;
+    }
+  
+    try {
+      const response = await axios.post(`http://localhost:8080/home/checkId?userId=${username}`);
+      console.log('아이디 중복 확인 성공:', response.data);
+  
+      if (response.data.status === 'success') {
+        alert('사용 가능한 아이디입니다.');
+      } else {
+        alert('이미 가입된 아이디입니다.');
+      }
+    } catch (error) {
+      // error.response가 존재하는지 확인
+      if (error.response) {
+        console.error('아이디 중복 확인 실패:', error.response.data);
+        alert('아이디 중복 확인에 실패했습니다. 다시 시도해주세요.');
+      } else {
+        // 네트워크 오류 등으로 인해 error.response가 없는 경우
+        console.error('아이디 중복 확인 실패:', error.message);
+        alert('서버에 연결할 수 없습니다. 다시 시도해주세요.');
+      }
     }
   };
 
@@ -81,7 +111,7 @@ const SignupPage = () => {
             placeholder="아이디 입력"
             required
           />
-          <Button type="button" onClick={() => {/* 중복 확인 로직 필요*/}}>중복 확인</Button>
+          <Button type="button" onClick={handleCheckId}>중복 확인</Button>
         </InputContainer>
 
         <InputContainer2>
@@ -178,10 +208,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 20px;
-  margin-bottom:200px;
-  margin-top:10vh;
+  min-height: calc(100vh - 200px);
+  margin-top:200px;
 
 `;
 
