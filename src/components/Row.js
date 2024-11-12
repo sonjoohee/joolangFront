@@ -81,9 +81,9 @@ const Row = ({ title, index }) => {
 };
 
 const RowWrapper = styled.div`
-  width: 1074px;
-  height: 360px;
-  margin: 200px auto;
+  margin: 80px auto;
+  width: 70%;
+  height: 100%;
 `;
 
 const RowTitle = styled.h2`

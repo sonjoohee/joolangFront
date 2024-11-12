@@ -10,18 +10,20 @@ import MyPage from "./pages/MyPage";
 import { Outlet, Route, Routes } from 'react-router-dom';
 import FindID from './pages/LoginPage/FindID';
 import FindPass from './pages/LoginPage/FindPass';
-import styled from 'styled-components';
 import Nav from './components/Nav';
+import styled from 'styled-components';
 
-
-const Layout =() => {
-  return(
-    <Container>
-      <Nav />
-      <Outlet/>
-    </Container>
-  )
+const Layout = () => {
+  return (
+    <div>
+     
+        <Nav />
+  
+      <Outlet />
+    </div>
+  );
 }
+
 function App() {
   return (
     <div className="App">
@@ -37,20 +39,23 @@ function App() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="find-id" element={<FindID />} />
           <Route path="find-pass" element={<FindPass />} />
-      </Route>
+        </Route>
       </Routes>
-
-      
-      
     </div>
   );
 }
 
 export default App;
 
-const Container = styled.div`
-  display : flex;
-  width : 100vw;
-  justify-content : center;
-  align-items : center;
-`
+// const Container = styled.section`
+// // overflow:hidden;
+// display:flex;
+// flex-direction: column;
+// text-align: center;
+// width: 100vw;  
+// height: 100vh;
+// // padding: 0px auto;
+// padding: 20px 0px;
+// `;
+
+
