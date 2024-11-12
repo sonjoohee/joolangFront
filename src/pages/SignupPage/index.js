@@ -68,6 +68,34 @@ const SignupPage = () => {
     }
   };
 
+  const handleCheckId = async () => {
+    if (!username) {
+      alert('아이디를 입력하세요.');
+      return;
+    }
+  
+    try {
+      const response = await axios.post(`http://localhost:8080/home/checkId?userId=${username}`);
+      console.log('아이디 중복 확인 성공:', response.data);
+  
+      if (response.data.status === 'success') {
+        alert('사용 가능한 아이디입니다.');
+      } else {
+        alert('이미 가입된 아이디입니다.');
+      }
+    } catch (error) {
+      // error.response가 존재하는지 확인
+      if (error.response) {
+        console.error('아이디 중복 확인 실패:', error.response.data);
+        alert('아이디 중복 확인에 실패했습니다. 다시 시도해주세요.');
+      } else {
+        // 네트워크 오류 등으로 인해 error.response가 없는 경우
+        console.error('아이디 중복 확인 실패:', error.message);
+        alert('서버에 연결할 수 없습니다. 다시 시도해주세요.');
+      }
+    }
+  };
+
   return (
     <Container>
       <Nav />
@@ -83,7 +111,7 @@ const SignupPage = () => {
             placeholder="아이디 입력"
             required
           />
-          <Button type="button" onClick={() => {/* 중복 확인 로직 필요*/}}>중복 확인</Button>
+          <Button type="button" onClick={handleCheckId}>중복 확인</Button>
         </InputContainer>
 
         <InputContainer2>
