@@ -28,6 +28,41 @@ export const isTokenExpired = (token) => {
   return Date.now() >= exp; // 현재 시간과 만료 시간을 비교
 };
 
+// 소셜 로그인 함수
+export const socialLogin = async (provider, accessToken) => {
+    try {
+      const response = await apiClient.post(`/home/login/${provider}`, {
+        accessToken,
+      });
+  
+      if (response.status === 200) {
+        saveToken(response.data.token); // JWT 저장
+        return response.data; // JWT 포함된 응답 데이터 반환
+      }
+    } catch (error) {
+      console.error('소셜 로그인 실패:', error);
+      throw error; // 오류를 상위로 전파
+    }
+  };
+  
+  // Access Token 발급 요청 함수
+  export const getAccessToken = async (refreshToken) => {
+    try {
+      const response = await apiClient.post('/auth/access-token', {
+        refreshToken: refreshToken
+      }, {
+        headers: {
+          'Accept': '*/*'
+        }
+      });
+  
+      return response.data; // API 응답 반환
+    } catch (error) {
+      console.error('Access Token 발급 요청 중 오류 발생:', error);
+      return null;
+    }
+  };
+
 // 로그인 함수
 export const login = async (userId, password) => {
   try {

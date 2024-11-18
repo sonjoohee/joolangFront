@@ -14,24 +14,28 @@ const FindPass = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const userData = {
+        userId: userId,  // 사용자의 ID
+        email: email,  // 사용자의 이메일
+    };
+
     try {
-        const response = await axios.get(`http://localhost:8080/home/verifyCode/password`, {
-            params: {
-                userId: userId,
-                email: email,
-                type: 'userId'
-            }
-        });
+        const response = await axios.post('http://localhost:8080/certifyUserProc', userData);
 
         if (response.status === 200) {
-            setVerificationCode(response.data.verificationCode);
+            // 가입된 회원인 경우 이메일 인증 페이지로 이동
+            navigate('/email-verify', { state: { userId } });
         }
     } catch (error) {
         let errorMessage;
 
         if (error.response) {
             // 서버가 응답했지만, 상태 코드가 2xx가 아닌 경우
-            if (error.response.status >= 400 && error.response.status < 500) {
+            if (error.response.status === 400) {
+                // 사용자 인증 실패: 'userId' 또는 'email'이 없는 경우
+                errorMessage = '가입된 회원이 아닙니다. userId 또는 email을 확인하세요.';
+            } else if (error.response.status >= 400 && error.response.status < 500) {
                 errorMessage = '클라이언트 오류: ' + (error.response.data?.message || '잘못된 요청입니다.');
             } else if (error.response.status >= 500) {
                 errorMessage = '서버 오류: ' + (error.response.data?.message || '서버에서 문제가 발생했습니다.');
@@ -48,7 +52,6 @@ const FindPass = () => {
         alert(errorMessage);
     }
 };
-
 
   const handleAddButtonClick = () => {
     navigate('/SignupPage'); 
@@ -86,7 +89,9 @@ const FindPass = () => {
         {verificationCode && <p>인증 코드: {verificationCode}</p>}
 
         <LinkContainer>
-          <Link onClick={() => navigate('/find-id')}>아이디 찾기</Link>
+          {/* <Link onClick={() => navigate('/find-id')}>아이디 찾기</Link> */}
+          {/* <Link onClick={() => navigate('/email-verify')}>아이디 찾기</Link> */}
+          <Link onClick={() => navigate('/rewrite-password')}>아이디 찾기</Link>
           <Divider>|</Divider>
           <Link onClick={handleAddButtonClick}>회원가입</Link>
         </LinkContainer>

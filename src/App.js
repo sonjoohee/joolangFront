@@ -11,7 +11,9 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import FindID from './pages/LoginPage/FindID';
 import FindPass from './pages/LoginPage/FindPass';
 import Nav from './components/Nav';
-import styled from 'styled-components';
+import EmailVerify from './pages/LoginPage/EmailVerify';
+import RewritePass from './pages/LoginPage/RewritePass';
+// import styled from 'styled-components';
 
 const Layout = () => {
   return (
@@ -39,6 +41,8 @@ function App() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="find-id" element={<FindID />} />
           <Route path="find-pass" element={<FindPass />} />
+          <Route path="email-verify" element={<EmailVerify />} />
+          <Route path="rewrite-password" element={<RewritePass />} />
         </Route>
       </Routes>
     </div>

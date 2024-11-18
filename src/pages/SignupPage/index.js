@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Nav from "../../components/Nav";
 import axios from 'axios';
 
 const SignupPage = () => {
@@ -98,7 +97,6 @@ const SignupPage = () => {
 
   return (
     <Container>
-      <Nav />
       <Title>회원가입</Title>
 
       <Form onSubmit={handleSubmit}>
