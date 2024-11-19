@@ -29,7 +29,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       if (error.response && error.response.data) {
-        console.error('��그인 실패:', error.response.data);
+        console.error('그인 실패:', error.response.data);
         alert('로그인에 실패하였습니다. 아이디와 비밀번호를 확인하세요.');
       } else {
         console.error('로그인 실패: 서버에 연결할 수 없습니다.');
@@ -63,8 +63,8 @@ const LoginPage = () => {
           const socialResponse = await socialLogin('naver', code);
           if (socialResponse.token) {
             localStorage.setItem('jwtToken', socialResponse.token);
-            // 비밀번호 설정 페이지로 리디렉션
-            navigate('/rewrite-password', { state: { title: '비밀번호 설정' } });
+            // 비밀번호 설정 페이지로 리디렉션, 소셜 사용자 여부 전달
+            navigate('/rewrite-password', { state: { title: '비밀번호 설정', isSocialUser: true } });
           }
         } catch (error) {
           console.error('소셜 로그인 처리 중 오류 발생:', error);

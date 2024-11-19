@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const RewritePass = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-//   const [userId, setUserId] = useState(''); // 사용자의 ID
+  const [userId, setUserId] = useState(''); // 세션에서 가져온 사용자 ID
   const navigate = useNavigate();
-
   const location = useLocation();
-  const { title } = location.state || {}; 
+  const { title, isSocialUser } = location.state || {}; // isSocialUser를 추가하여 소셜 사용자 여부 확인
+
+  // 세션에서 사용자 ID 가져오기
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const response = await axios.get('/getUserId'); // 서버에서 사용자 ID 가져오기
+        setUserId(response.data.userId);
+      } catch (error) {
+        console.error('사용자 ID를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchUserId();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,18 +34,37 @@ const RewritePass = () => {
     }
 
     const resetData = {
-    //   userId,
-      newPassword: password,
+      userId, // 세션에서 가져온 사용자 ID
+      password,
+      confirmPassword,
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/reset/password', resetData);
-      console.log('비밀번호 재설정 성공:', response.data);
-      alert('비밀번호가 성공적으로 재설정되었습니다.');
-      navigate('/login'); // 로그인 페이지로 리디렉션
+      let response;
+      if (isSocialUser) {
+        // 소셜 로그인 사용자일 경우
+        response = await axios.post('http://localhost:8080/home/joinPasswordProc', resetData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': '*/*',
+          },
+        });
+      } else {
+        // 기존 사용자일 경우
+        response = await axios.post('http://localhost:8080/updatePasswordProc', resetData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': '*/*',
+          },
+        });
+      }
+
+      console.log('비밀번호 처리 성공:', response.data);
+      alert('비밀번호가 성공적으로 처리되었습니다.');
+      navigate('/'); // 로그인 페이지로 리디렉션
     } catch (error) {
-      console.error('비밀번호 재설정 실패:', error?.response?.data || error.message);
-      alert('비밀번호 재설정에 실패했습니다. 다시 시도해주세요.');
+      console.error('비밀번호 처리 실패:', error?.response?.data || error.message);
+      alert('비밀번호 처리에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -63,7 +95,6 @@ const RewritePass = () => {
         </InputContainer>
 
         <ButtonContainer>
-          {/* <Button type="button" onClick={() => navigate(-1)}>뒤로 가기</Button> */}
           <Button type="submit">비밀번호 재설정</Button>
         </ButtonContainer>
       </Form>
