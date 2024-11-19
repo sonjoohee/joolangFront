@@ -1,22 +1,16 @@
-// src/components/ChatArea.js
-import {React, useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faSignOutAlt, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
-const ChatArea = ({ selectedUser, messages, input, setInput, handleSend }) => {
+const ChatArea = ({ selectedUser, messages, handleSend, input, setInput, onLeave }) => {
+  const fileInputRef = useRef(null);
+  const [images, setImages] = useState([]);
 
-const fileInputRef = useRef(null); // 파일 입력을 위한 ref
-
-const [images, setImages] = useState([]);
-
-const handleLabelClick = () => {
-    // 파일 입력 클릭
+  const handleLabelClick = () => {
     fileInputRef.current.click();
   };
-
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -25,7 +19,12 @@ const handleLabelClick = () => {
 
   return (
     <ChatAreaContainer>
-      <Header>{selectedUser ? `${selectedUser} 님과의 채팅` : "채팅을 선택하세요"}</Header>
+      <Header>
+        {selectedUser ? `${selectedUser} 님과의 채팅` : "채팅을 선택하세요"}
+        <LeaveButton onClick={onLeave}>
+          <FontAwesomeIcon icon={faSignOutAlt} />
+        </LeaveButton>
+      </Header>
       <MessageList>
         {messages.map((msg) => (
           <Message key={msg.id} outgoing={msg.direction === "outgoing"}>
@@ -38,39 +37,28 @@ const handleLabelClick = () => {
               </ProfileInfo>
             )}
             <MessageContent>
-                <MessageText>{msg.text}</MessageText>
+              <MessageText>{msg.text}</MessageText>
             </MessageContent>
             <Time outgoing={msg.direction === "outgoing"}>{msg.time}</Time>
           </Message>
         ))}
       </MessageList>
-     
       
       <InputContainer>
-
-
-      <ImagePreview>
-        {images.map((img, index) => (
-          <ImageItem key={index}>
-            <ImagePreviewText>{img.name}</ImagePreviewText>
-            <RemoveButton onClick={() => setImages(images.filter((_, i) => i !== index))}>×</RemoveButton>
-          </ImageItem>
-        ))}
-      </ImagePreview>
-      <FileInputContainer>
-        <FontAwesomeIcon 
-          icon={faPaperclip} 
-          color="#6AB2E1" 
-          onClick={handleLabelClick}
-        />
-        <FileInput
-          type="file"
-          multiple
-          ref={fileInputRef}
-          onChange={handleImageUpload}
-          style={{ display: 'none' }}
-        />
-      </FileInputContainer>
+        <FileInputContainer>
+          <FontAwesomeIcon 
+            icon={faPaperclip} 
+            color="#6AB2E1" 
+            onClick={handleLabelClick}
+          />
+          <FileInput
+            type="file"
+            multiple
+            ref={fileInputRef}
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
+          />
+        </FileInputContainer>
 
         <Input
           value={input}
@@ -99,6 +87,21 @@ const Header = styled.div`
   color: white;
   font-weight: bold;
   text-align: left;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const LeaveButton = styled.button`
+  background: none; 
+  border: none; 
+  color: white; 
+  cursor: pointer; 
+  font-size: 1.1em; 
+  margin-left: auto;
+
+  &:hover {
+    color: #ffcccc; // 호버 시 색상 변경
+  }
 `;
 
 const MessageList = styled.div`
@@ -191,7 +194,8 @@ const Input = styled.input`
 `;
 
 const SendButton = styled.button`
-  padding: 10px;
+  padding: 8px;
+  margin: 6px;
   background-color: #6ab2e1;
   color: white;
   border: none;
@@ -200,6 +204,7 @@ const SendButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 14px;
   &:hover {
     background-color: #5fa5d7;
   }

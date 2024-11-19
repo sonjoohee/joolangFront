@@ -1,68 +1,46 @@
-// src/components/ChatList.js
-import {React,useState,useEffect} from 'react';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
-import axios from 'axios';
+import React from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser as regularUser, faPlus } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
-const ChatList = ({ selectedUser, handleSelectUser, lastMessageTimes }) => {
-  const [chatRooms, setChatRooms] = useState([]);
-
-  // 1. 채팅 목록을 가져오는 API 호출
-  useEffect(() => {
-    const fetchChatRooms = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/chat/main', {
-          headers: {
-            'Accept': '*/*',
-          },
-        });
-
-        if (response.status === 200) {
-          setChatRooms(response.data.data); // API 응답에서 채팅방 리스트 설정
-        } else {
-          console.error('채팅방 불러오기 실패:', response.data.message);
-        }
-      } catch (error) {
-        console.error('API 호출 오류:', error);
-      }
-    };
-
-    fetchChatRooms();
-  }, []);
-
-  // 2. 사용자가 채팅방을 선택할 때 호출되는 함수
-  const handleUserSelect = async (roomId) => {
+const ChatList = ({ chatRooms, selectedUser, handleSelectUser, lastMessageTimes }) => {
+  const handleAdd = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/post/chat/${roomId}`, {}, {
-        headers: {
-          'Accept': '*/*',
-        },
+      // 새로운 채팅방을 생성하는 API 호출
+      const response = await axios.post(`http://localhost:8080/post/chat`, {
+        // 필요한 데이터가 있을 경우 추가
       });
 
       if (response.status === 200) {
-        console.log('채팅방 들어가기 성공:', response.data.message);
-        handleSelectUser(roomId); // 선택된 사용자를 업데이트
+        console.log(response.data.message);
+        // 생성된 채팅방을 선택하도록 설정할 수 있습니다.
+        handleSelectUser(response.data.data.id); // 방에 들어가기
       } else {
-        console.error('채팅방 들어가기 실패:', response.data.message);
+        console.error("채팅방 생성 실패:", response.data.message);
       }
     } catch (error) {
-      console.error('API 호출 오류:', error);
+      console.error("채팅방 생성 오류:", error);
     }
   };
 
   return (
     <UserList>
-      <ListHeader>채팅 목록</ListHeader>
+      <ListHeader>
+        채팅 목록
+        <AddButton onClick={handleAdd}>
+          <FontAwesomeIcon icon={faPlus} />
+        </AddButton>
+      </ListHeader>
       <ChatListContainer>
         {chatRooms.map((room) => (
           <UserItem
-            key={room.id} // room.id를 사용하여 고유 식별자 설정
-            onClick={() => handleUserSelect(room.id)} // 채팅방 ID를 전달
-            selected={selectedUser === room.id}
+            key={room.id}
+            onClick={() => handleSelectUser(room.name)} // 채팅방 이름으로 선택
+            selected={selectedUser === room.name}
           >
             <IconWrapper>
-              <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
+              <FontAwesomeIcon icon={regularUser} style={{ fontSize: "20px", lineHeight: "1.2" }} />
             </IconWrapper>
             <UserInfo>
               <UserId>{room.name}</UserId> {/* room.name은 사용자 이름으로 가정 */}
@@ -79,33 +57,6 @@ const ChatList = ({ selectedUser, handleSelectUser, lastMessageTimes }) => {
 };
 
 
-//   return (
-//     <UserList>
-//       <ListHeader>채팅 목록</ListHeader>
-//       <ChatListContainer>
-//         {['갓지훈', '이상진', '귀차나'].map((user) => (
-//           <UserItem
-//             key={user}
-//             onClick={() => handleSelectUser(user)}
-//             selected={selectedUser === user}
-//           >
-//             <IconWrapper>
-//               <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
-//             </IconWrapper>
-//             <UserInfo>
-//               <UserId>{user}</UserId>
-//               <LastMessage>마지막 메시지</LastMessage>
-//             </UserInfo>
-//             <MessageInfo>
-//               <LastTime>{lastMessageTimes[user] || "N/A"}</LastTime>
-//             </MessageInfo>
-//           </UserItem>
-//         ))}
-//       </ChatListContainer>
-//     </UserList>
-//   );
-// };
-
 const UserList = styled.div`
   width: 50%;
   border: 1px solid #ccc;
@@ -118,6 +69,20 @@ const ListHeader = styled.div`
   color: white;
   font-weight: bold;
   text-align: left;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const AddButton = styled.button`
+  background-color: #6ab2e1; // 배경색
+  border: none;
+  border-radius: 5px; // 둥근 모서리
+  cursor: pointer;
+  color: white;
+
+  &:hover {
+    background-color: #5fa5d7; // 호버 시 배경색 변경
+  }
 `;
 
 const ChatListContainer = styled.div`
