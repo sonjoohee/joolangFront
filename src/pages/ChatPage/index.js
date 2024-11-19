@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ChatList from "../../components/ChatList";
 import ChatArea from "../../components/ChatArea";
-import Nav from "../../components/Nav";
 import styled from "styled-components";
+
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
@@ -51,7 +51,6 @@ const ChatPage = () => {
 
   return (
     <Container>
-         <Nav/>
       <ChatList
         selectedUser={selectedUser}
         handleSelectUser={handleSelectUser}
@@ -83,7 +82,13 @@ const Container = styled.div`
   background-color: #fff;
 `;
 
-
+// 버튼 스타일 추가 (필요시)
+const Button = styled.button`
+  margin-bottom: 20px; // 버튼과 다른 요소 간의 간격
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+`;
 
 export default ChatPage;
 

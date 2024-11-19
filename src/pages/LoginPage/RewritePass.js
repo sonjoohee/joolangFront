@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const RewritePass = () => {
@@ -8,6 +8,9 @@ const RewritePass = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
 //   const [userId, setUserId] = useState(''); // 사용자의 ID
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const { title } = location.state || {}; 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +38,7 @@ const RewritePass = () => {
 
   return (
     <Container>
-      <Title>비밀번호 재설정</Title>
+      <Title>{title || '비밀번호 재설정'}</Title>
       <Form onSubmit={handleSubmit}>
         <InputContainer>
           <Label>비밀번호 <span>*</span></Label>

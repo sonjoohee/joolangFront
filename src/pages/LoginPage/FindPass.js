@@ -16,8 +16,9 @@ const FindPass = () => {
     e.preventDefault();
 
     const userData = {
-        userId: userId,  // 사용자의 ID
-        email: email,  // 사용자의 이메일
+        userId: userId, 
+        email: email,  
+        type: 'password' 
     };
 
     try {

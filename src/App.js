@@ -7,20 +7,23 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ChatPage from "./pages/ChatPage";
 import MyPage from "./pages/MyPage";
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import FindID from './pages/LoginPage/FindID';
 import FindPass from './pages/LoginPage/FindPass';
 import Nav from './components/Nav';
 import EmailVerify from './pages/LoginPage/EmailVerify';
 import RewritePass from './pages/LoginPage/RewritePass';
+import ChatArea from './pages/ChatPage/ChatArea';
+import ChatList from './pages/ChatPage/ChatList';
+
 // import styled from 'styled-components';
 
 const Layout = () => {
+  const location = useLocation();
+
   return (
     <div>
-     
-        <Nav />
-  
+      {location.pathname !== '/chatpage' && <Nav />}
       <Outlet />
     </div>
   );
@@ -38,6 +41,8 @@ function App() {
           <Route path="productpage" element={<ProductPage />} />
           <Route path="searchpage" element={<SearchPage />} />
           <Route path="chatpage" element={<ChatPage />} />
+          <Route path="chatlist" element={<ChatList />} />
+          <Route path="chatarea" element={<ChatArea />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="find-id" element={<FindID />} />
           <Route path="find-pass" element={<FindPass />} />

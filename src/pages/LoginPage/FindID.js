@@ -12,21 +12,35 @@ const FindID = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost:8080/api/find-id', {
-        email,
-      });
+    const userData = {
+        email: email,   // 사용자 이메일만 전달
+        type: 'userId' // 요청 타입 추가
+      };
 
-      if (response.data.id) {
-        setMessage(`찾은 아이디: ${response.data.id}`); // 아이디 반환
-      } else {
-        setMessage('해당 이메일에 연결된 아이디가 없습니다.');
-      }
-    } catch (error) {
-      console.error('아이디 찾기 실패:', error);
-      setMessage('아이디 찾기 중 오류가 발생했습니다.');
-    }
-  };
+    try {
+        const response = await axios.post('http://localhost:8080/certifyUserProc', userData);
+
+        if (response.status === 200) {
+            // 사용자 인증 성공
+            // setMessage('사용자 인증이 완료되었습니다. 이메일 인증 페이지로 이동합니다.');
+            navigate('/email-verify', { state: { email } }); // 이메일 인증 페이지로 이동
+          }
+        } catch (error) {
+          console.error('사용자 인증 실패:', error);
+          setMessage('사용자 인증에 실패했습니다. 이메일을 확인하세요.');
+        }
+      };
+
+//       if (response.data.id) {
+//         setMessage(`찾은 아이디: ${response.data.id}`); // 아이디 반환
+//       } else {
+//         setMessage('해당 이메일에 연결된 아이디가 없습니다.');
+//       }
+//     } catch (error) {
+//       console.error('아이디 찾기 실패:', error);
+//       setMessage('아이디 찾기 중 오류가 발생했습니다.');
+//     }
+//   };
 
   const handleAddButtonClick = () => {
     navigate('/SignupPage'); 

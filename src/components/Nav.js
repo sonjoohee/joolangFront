@@ -56,8 +56,17 @@ const Nav = () => {
     navigate("/ProductPage");
   };
 
+  // const ChatButtonClick = () => {
+  //   // 새로운 창에서 채팅 페이지 열기
+  //   window.open("/chatpage", "_blank", "width=600,height=400,resizable=no");
+  // };
+
   const ChatButtonClick = () => {
-    navigate("/ChatPage");
+    // 새로운 창에서 채팅 페이지 열기
+    window.open("/chatpage/chatarea", "_blank", "width=600,height=400,resizable=no");
+    window.open("/chatpage/chatlist", "_blank", "width=600,height=400,resizable=no");
+    // 추가: 채팅 페이지 열기 후 알림 표시
+    alert("채팅 페이지가 새 창에서 열렸습니다.");
   };
 
   const MyPageButtonClick = () => {

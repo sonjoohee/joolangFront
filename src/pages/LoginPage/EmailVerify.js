@@ -6,23 +6,23 @@ import axios from 'axios';
 const EmailVerify = () => {
   const [email, setEmail] = useState('');
   const [com, setEmailcom] = useState('');
-  const [verificationCodeVisible, setVerificationCodeVisible] = useState(false);
+//   const [verificationCodeVisible, setVerificationCodeVisible] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const navigate = useNavigate();
 
 const handleVerifyEmail = async () => {
 
-    const signupData = {
+    const Data = {
         email: `${email}@${com}`, // 이메일 형식으로 결합
         type: 'password' // 요청 타입
     };
 
     try {
-        const response = await axios.post('http://localhost:8080/sendCodeProc', signupData); // POST 요청으로 변경
+        const response = await axios.post('http://localhost:8080/sendCodeProc', Data); // POST 요청으로 변경
   
         if (response.status === 200) {
             alert('이메일 인증 요청이 성공적으로 전송되었습니다.');
-            setVerificationCodeVisible(true); // 인증 코드 입력을 위한 상태를 설정
+            // setVerificationCodeVisible(true); // 인증 코드 입력을 위한 상태를 설정
             // 필요한 경우 추가 작업을 수행
         }
     } catch (error) {
