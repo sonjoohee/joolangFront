@@ -29,12 +29,12 @@ const RewritePass = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다.');
+      alert('비밀번호가 일치하지 ��습니다.');
       return;
     }
 
     const resetData = {
-      userId, // 세션에서 가져온 사용자 ID
+      userId, // 여기서 전달받은 userId 사용
       password,
       confirmPassword,
     };
