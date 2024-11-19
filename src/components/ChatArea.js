@@ -1,26 +1,70 @@
-// src/components/ChatArea.js
-import {React, useRef, useState} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { io } from 'socket.io-client';
 
-const ChatArea = ({ selectedUser, messages, input, setInput, handleSend }) => {
+const socket = io("http://localhost:8080");
 
-const fileInputRef = useRef(null); // 파일 입력을 위한 ref
+const ChatArea = ({ selectedUser, messages, roomId, handleSendMessage, input, setInput, onSend }) => {
+  const fileInputRef = useRef(null);
+  const [chatMessages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [images, setImages] = useState([]);
 
-const [images, setImages] = useState([]);
+  useEffect(() => {
+    if (socket) {
+      socket.on("receiveMessage", (message) => {
+        setMessages(prevMessages => [...prevMessages, message]);
+      });
 
-const handleLabelClick = () => {
-    // 파일 입력 클릭
+      return () => {
+        socket.off("receiveMessage");
+      };
+    } else {
+      console.error("Socket is not defined");
+    }
+  }, [socket]);
+
+  const handleLabelClick = () => {
     fileInputRef.current.click();
   };
-
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     setImages(prevImages => [...prevImages, ...files]);
+  };
+
+  const handleSend = async () => {
+    if (chatInput.trim() || images.length > 0) {
+      const formData = new FormData();
+      formData.append('text', chatInput);
+      images.forEach(image => {
+        formData.append('images', image);
+      });
+
+      try {
+        const response = await axios.post(`http://localhost:8080/chat/room/${roomId}/send`, formData, {
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'multipart/form-data'
+          },
+        });
+
+        if (response.status === 200) {
+          setMessages(prevMessages => [...prevMessages, response.data.data]); // 메시지 추가
+          setChatInput(''); // 입력 필드 초기화
+          setImages([]); // 이미지 초기화
+        } else {
+          console.error('메시지 전송 오류:', response.data.message);
+        }
+      } catch (error) {
+        console.error('메시지 전송 오류:', error);
+      }
+    }
   };
 
   return (
@@ -38,43 +82,32 @@ const handleLabelClick = () => {
               </ProfileInfo>
             )}
             <MessageContent>
-                <MessageText>{msg.text}</MessageText>
+              <MessageText>{msg.text}</MessageText>
             </MessageContent>
             <Time outgoing={msg.direction === "outgoing"}>{msg.time}</Time>
           </Message>
         ))}
       </MessageList>
-     
       
       <InputContainer>
-
-
-      <ImagePreview>
-        {images.map((img, index) => (
-          <ImageItem key={index}>
-            <ImagePreviewText>{img.name}</ImagePreviewText>
-            <RemoveButton onClick={() => setImages(images.filter((_, i) => i !== index))}>×</RemoveButton>
-          </ImageItem>
-        ))}
-      </ImagePreview>
-      <FileInputContainer>
-        <FontAwesomeIcon 
-          icon={faPaperclip} 
-          color="#6AB2E1" 
-          onClick={handleLabelClick}
-        />
-        <FileInput
-          type="file"
-          multiple
-          ref={fileInputRef}
-          onChange={handleImageUpload}
-          style={{ display: 'none' }}
-        />
-      </FileInputContainer>
+        <FileInputContainer>
+          <FontAwesomeIcon 
+            icon={faPaperclip} 
+            color="#6AB2E1" 
+            onClick={handleLabelClick}
+          />
+          <FileInput
+            type="file"
+            multiple
+            ref={fileInputRef}
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
+          />
+        </FileInputContainer>
 
         <Input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={chatInput}
+          onChange={(e) => setChatInput(e.target.value)}
           placeholder="메시지를 입력하세요"
         />
         <SendButton onClick={handleSend}>

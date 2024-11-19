@@ -1,29 +1,28 @@
-// src/components/ChatList.js
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
 
-const ChatList = ({ selectedUser, handleSelectUser, lastMessageTimes }) => {
+const ChatList = ({ chatRooms, selectedUser, handleSelectUser, lastMessageTimes }) => {
   return (
     <UserList>
       <ListHeader>채팅 목록</ListHeader>
       <ChatListContainer>
-        {['갓지훈', '이상진', '귀차나'].map((user) => (
+        {chatRooms.map((room) => (
           <UserItem
-            key={user}
-            onClick={() => handleSelectUser(user)}
-            selected={selectedUser === user}
+            key={room.id} // room.id를 사용하여 고유 식별자 설정
+            onClick={() => handleSelectUser(room.id)} // 채팅방 ID를 전달
+            selected={selectedUser === room.id}
           >
             <IconWrapper>
               <FontAwesomeIcon icon={regularUser} style={{ fontSize: '20px', lineHeight: '1.2'}} />
             </IconWrapper>
             <UserInfo>
-              <UserId>{user}</UserId>
+              <UserId>{room.name}</UserId> {/* room.name은 사용자 이름으로 가정 */}
               <LastMessage>마지막 메시지</LastMessage>
             </UserInfo>
             <MessageInfo>
-              <LastTime>{lastMessageTimes[user] || "N/A"}</LastTime>
+              <LastTime>{lastMessageTimes[room.id] || "N/A"}</LastTime>
             </MessageInfo>
           </UserItem>
         ))}
@@ -31,6 +30,7 @@ const ChatList = ({ selectedUser, handleSelectUser, lastMessageTimes }) => {
     </UserList>
   );
 };
+
 
 const UserList = styled.div`
   width: 50%;
