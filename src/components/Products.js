@@ -3,11 +3,13 @@ import axios from 'axios';
 import styled from 'styled-components';
 import MuiPagination from '@mui/material/Pagination';
 import LikeButton from './LikeButton';
+import { useNavigate } from 'react-router-dom';
 
 const Products = () => {
   const [itemList, setItemList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
+  const navigate = useNavigate();
 
   const fetchItems = async () => {
     try {
@@ -40,11 +42,15 @@ const Products = () => {
     currentPage * itemsPerPage
   );
 
+  const handleItemClick = (id) => {
+    navigate(`/product/${id}`); // 클릭한 상품의 ID를 URL에 추가하여 이동
+  };
+
   return (
     <RowWrapper>
       <ItemList>
         {displayedItems.map((item, index) => (
-          <ItemCard key={index}>
+          <ItemCard key={index} onClick={() => handleItemClick(item.id)}>
             <ItemImage src={item.imageUrl} alt={item.title} />
             <ItemDetails>
               <ItemTitle>{item.title}</ItemTitle>
@@ -79,8 +85,8 @@ const RowWrapper = styled.div`
 
 const ItemList = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr); 
-  gap: 20px; 
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
   padding: 10px 0;
   margin: 40px 0;
 `;
@@ -88,6 +94,7 @@ const ItemList = styled.div`
 const ItemCard = styled.div`
   border-radius: 1px;
   position: relative;
+  cursor: pointer;
 
   &:hover {
     background-color: #A0DAFB;
@@ -96,8 +103,8 @@ const ItemCard = styled.div`
 
 const ItemImage = styled.img`
   width: 220px;
-  height: 240px; 
-  object-fit: cover; 
+  height: 240px;
+  object-fit: cover;
 `;
 
 const ItemDetails = styled.div`
@@ -121,4 +128,3 @@ const ItemDate = styled.p`
 `;
 
 export default Products;
-

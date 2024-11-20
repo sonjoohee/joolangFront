@@ -15,6 +15,7 @@ import EmailVerify from './pages/LoginPage/EmailVerify';
 import RewritePass from './pages/LoginPage/RewritePass';
 import ChatArea from './pages/ChatPage/ChatArea';
 import ChatList from './pages/ChatPage/ChatList';
+import ProductDetail from './pages/ProductDetai.';
 
 // import styled from 'styled-components';
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="find-pass" element={<FindPass />} />
           <Route path="email-verify" element={<EmailVerify />} />
           <Route path="rewrite-password" element={<RewritePass />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
         </Route>
       </Routes>
     </div>
