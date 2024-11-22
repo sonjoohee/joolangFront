@@ -17,17 +17,7 @@ import ChatArea from './pages/ChatPage/ChatArea';
 import ChatList from './pages/ChatPage/ChatList';
 import React from 'react';
 import { AuthProvider } from './context/AuthContext';
-
-const Layout = () => {
-  const location = useLocation();
-
-  return (
-    <div>
-      {location.pathname !== '/chatpage' && <Nav />}
-      <Outlet />
-    </div>
-  );
-}
+// import Layout from './components/Layout';
 
 const App = () => {
   return (
@@ -53,6 +43,17 @@ const App = () => {
         </Routes>
       </div>
     </AuthProvider>
+  );
+}
+
+const Layout = () => {
+  const location = useLocation();
+
+  return (
+    <div>
+      {location.pathname !== '/chatpage' && <Nav />}
+      <Outlet />
+    </div>
   );
 }
 

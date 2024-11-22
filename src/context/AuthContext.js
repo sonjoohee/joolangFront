@@ -3,7 +3,7 @@ import { getToken, saveToken, removeToken } from '../api/auth'; // auth.js에서
 import axios from 'axios';
 
 // Context 생성
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 // Provider 컴포넌트
 export const AuthProvider = ({ children }) => {

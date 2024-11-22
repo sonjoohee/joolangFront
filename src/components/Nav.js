@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import {  useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ import {
 } from "@fortawesome/free-regular-svg-icons"; // 라인 아이콘 임포트
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { getToken, removeToken } from "../api/auth.js"; // Adjust the path as necessary
+import { AuthContext } from "../context/AuthContext"; // Import the AuthContext
+import { useAuth } from '../context/AuthContext'; // AuthContext에서 useAuth 가져오기
 
 
 const GlobalStyle = createGlobalStyle`
@@ -23,13 +25,15 @@ const GlobalStyle = createGlobalStyle`
 
 const Nav = () => {
   const navigate = useNavigate();
+  const { user, isLoggedIn, login, logout } = useContext(AuthContext); // Use context for login state and logout function
   const [searchValue, setSearchValue] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
+  const { isLoggedIn: authIsLoggedIn } = useAuth(); // AuthContext에서 isLoggedIn 가져오기
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때 로그인 상태 확인
     const token = getToken(); // auth.js에서 토큰 가져오기
-    setIsLoggedIn(!!token); // 토큰이 있으면 로그인 상태 true
+    // isLoggedIn은 상태 값이므로 직접 호출하지 않고 사용
+    // 로그인 상태를 업데이트하는 로직이 필요할 수 있습니다.
   }, []);
 
   const handleChange = (e) => {
@@ -73,12 +77,6 @@ const Nav = () => {
     navigate('/MyPage'); 
   };
 
-  const handleLogout = () => { // 로그아웃 함수
-    removeToken(); // auth.js에서 토큰 삭제
-    setIsLoggedIn(false); // 로그인 상태 업데이트
-    navigate("/"); // 홈으로 리디렉션
-  };
-
   return (
     <>
       <NavWrapper>
@@ -110,9 +108,9 @@ const Nav = () => {
         </NavItems>
 
         <UserActions>
-          {isLoggedIn ? ( // 로그인 상태에 따라 버튼 표시
+          {authIsLoggedIn ? ( // 로그인 상태에 따라 버튼 표시
             <>
-              <UserAction onClick={handleLogout}>로그아웃</UserAction>
+              <UserAction onClick={() => logout(navigate)}>로그아웃</UserAction>
               <UserAction onClick={MyPageButtonClick}>마이페이지</UserAction>
 
             </>
