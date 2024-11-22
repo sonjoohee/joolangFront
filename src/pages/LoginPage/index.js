@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { login, logout } from '../../api/auth'; // API 함수 임포트
-import axios from 'axios';
+import { useAuth } from '../../context/AuthContext'; // AuthContext에서 가져오기
 import Nav from "../../components/Nav";
 import FindID from './FindID';
 import FindPass from './FindPass';
-import { socialLogin, getAccessToken, saveToken } from '../../api/auth';
-
+import { socialLogin } from '../../api/auth'; // 소셜 로그인 함수는 그대로 사용
 
 const LoginPage = () => {
+  const { login } = useAuth(); // Context에서 login 함수 가져오기
   const [userId, setUserId] = useState(''); 
   const [password, setPassword] = useState(''); 
   const [rememberMe, setRememberMe] = useState(false); 
@@ -19,38 +18,27 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await login(userId, password); // API 호출
+      const response = await login(userId, password); // Context의 login 함수 호출
 
-      if (response.token) {
+      if (response) {
         console.log('로그인 성공:', response);
-        // JWT 토큰을 로컬 스토리지에 저장하여 사용자의 인증 상태를 유지
-        localStorage.setItem('jwtToken', response.token); 
-        navigate('/');
+        navigate('/'); // 로그인 성공 시 홈으로 리디렉션
       }
     } catch (error) {
-      if (error.response && error.response.data) {
-        console.error('그인 실패:', error.response.data);
-        alert('로그인에 실패하였습니다. 아이디와 비밀번호를 확인하세요.');
-      } else {
-        console.error('로그인 실패: 서버에 연결할 수 없습니다.');
-        alert('로그인에 실패하였습니다. 서버에 연결할 수 없습니다.');
-      }
-      
-      // 사용자는 기본적으로 로그인 페이지에 남아 있습니다.
-      console.log('로그인 실패 후 사용자는 로그인 페이지에 머무릅니다.');
+      console.error('로그인 실패:', error);
+      alert('로그인에 실패하였습니다. 아이디와 비밀번호를 확인하세요.');
     }
   };
-
 
   const handleAddButtonClick = () => {
     navigate('/SignupPage'); 
   };
 
-
   const handleNaverLogin = async () => {
     // 네이버 소셜 로그인으로 리디렉션
     window.location.href = "http://localhost:8080/oauth2/authorization/naver";
   };
+
   // 페이지 로드 시 로그인 처리
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -60,7 +48,7 @@ const LoginPage = () => {
     if (code && state) {
       const handleSocialLogin = async () => {
         try {
-          const socialResponse = await socialLogin('naver', code);
+          const socialResponse = await socialLogin('naver', { code, state });
           if (socialResponse.token) {
             localStorage.setItem('jwtToken', socialResponse.token);
             // 비밀번호 설정 페이지로 리디렉션, 소셜 사용자 여부 전달

@@ -15,8 +15,8 @@ import EmailVerify from './pages/LoginPage/EmailVerify';
 import RewritePass from './pages/LoginPage/RewritePass';
 import ChatArea from './pages/ChatPage/ChatArea';
 import ChatList from './pages/ChatPage/ChatList';
-
-// import styled from 'styled-components';
+import React from 'react';
+import { AuthProvider } from './context/AuthContext';
 
 const Layout = () => {
   const location = useLocation();
@@ -29,42 +29,33 @@ const Layout = () => {
   );
 }
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element = {<MainPage />}/>
-          <Route path="loginpage" element={<LoginPage />} />
-          <Route path="signuppage" element={<SignupPage />} />
-          <Route path="writepage" element={<WritePage />} />
-          <Route path="productpage" element={<ProductPage />} />
-          <Route path="searchpage" element={<SearchPage />} />
-          <Route path="chatpage" element={<ChatPage />} />
-          <Route path="chatlist" element={<ChatList />} />
-          <Route path="chatarea" element={<ChatArea />} />
-          <Route path="mypage" element={<MyPage />} />
-          <Route path="find-id" element={<FindID />} />
-          <Route path="find-pass" element={<FindPass />} />
-          <Route path="email-verify" element={<EmailVerify />} />
-          <Route path="rewrite-password" element={<RewritePass />} />
-        </Route>
-      </Routes>
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<MainPage />} />
+            <Route path="loginpage" element={<LoginPage />} />
+            <Route path="signuppage" element={<SignupPage />} />
+            <Route path="writepage" element={<WritePage />} />
+            <Route path="productpage" element={<ProductPage />} />
+            <Route path="searchpage" element={<SearchPage />} />
+            <Route path="chatpage" element={<ChatPage />} />
+            <Route path="chatlist" element={<ChatList />} />
+            <Route path="chatarea" element={<ChatArea />} />
+            <Route path="mypage" element={<MyPage />} />
+            <Route path="find-id" element={<FindID />} />
+            <Route path="find-pass" element={<FindPass />} />
+            <Route path="email-verify" element={<EmailVerify />} />
+            <Route path="rewrite-password" element={<RewritePass />} />
+          </Route>
+        </Routes>
+      </div>
+    </AuthProvider>
   );
 }
 
 export default App;
-
-// const Container = styled.section`
-// // overflow:hidden;
-// display:flex;
-// flex-direction: column;
-// text-align: center;
-// width: 100vw;  
-// height: 100vh;
-// // padding: 0px auto;
-// padding: 20px 0px;
-// `;
 
 
