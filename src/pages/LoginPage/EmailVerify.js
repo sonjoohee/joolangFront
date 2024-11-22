@@ -12,14 +12,18 @@ const EmailVerify = () => {
   const navigate = useNavigate();
 
   const handleVerifyEmail = async () => {
-    const Data = {
+    const Data = JSON.stringify({
       email: `${email}@${com}`, // 이메일 형식으로 결합
       type: 'password', // 요청 타입
       userId // userId 추가
-    };
+    });
 
     try {
-      const response = await axios.post('http://localhost:8080/sendCodeProc', Data); // POST 요청으로 변경
+      const response = await axios.post('http://localhost:8080/sendCodeProc', Data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 
       if (response.status === 200) {
         alert('이메일 인증 요청이 성공적으로 전송되었습니다.');
@@ -38,7 +42,11 @@ const EmailVerify = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/verifyCodeProc', verifyData); // 인증 코드 확인 요청
+      const response = await axios.post('http://localhost:8080/verifyCodeProc', verifyData, { // 인증 코드 확인 요청
+        headers: {
+          'Content-Type': 'application/json' // Content-Type 추가
+        }
+      });
 
       if (response.status === 200) {
         alert('인증 코드가 확인되었습니다.');
