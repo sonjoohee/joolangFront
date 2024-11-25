@@ -5,10 +5,10 @@ import { useAuth } from '../../context/AuthContext'; // AuthContext에서 가져
 import Nav from "../../components/Nav";
 import FindID from './FindID';
 import FindPass from './FindPass';
-import { socialLogin } from '../../api/auth'; // 소셜 로그인 함수는 그대로 사용
+// import { socialLogin } from '../../api/auth'; 
 
 const LoginPage = () => {
-  const { login } = useAuth(); // Context에서 login 함수 가져오기
+  const { login,socialLogin } = useAuth(); // Context에서 login,social로그인 함수 가져오기
   const [userId, setUserId] = useState(''); 
   const [password, setPassword] = useState(''); 
   const [rememberMe, setRememberMe] = useState(false); 

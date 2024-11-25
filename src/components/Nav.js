@@ -9,7 +9,6 @@ import {
   faUser as regularUser,
 } from "@fortawesome/free-regular-svg-icons"; // 라인 아이콘 임포트
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { getToken, removeToken } from "../api/auth.js"; // Adjust the path as necessary
 import { AuthContext } from "../context/AuthContext"; // Import the AuthContext
 import { useAuth } from '../context/AuthContext'; // AuthContext에서 useAuth 가져오기
 
@@ -25,16 +24,16 @@ const GlobalStyle = createGlobalStyle`
 
 const Nav = () => {
   const navigate = useNavigate();
-  const { user, isLoggedIn, login, logout } = useContext(AuthContext); // Use context for login state and logout function
+  const { logout } = useContext(AuthContext); 
   const [searchValue, setSearchValue] = useState("");
   const { isLoggedIn: authIsLoggedIn } = useAuth(); // AuthContext에서 isLoggedIn 가져오기
 
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 로그인 상태 확인
-    const token = getToken(); // auth.js에서 토큰 가져오기
-    // isLoggedIn은 상태 값이므로 직접 호출하지 않고 사용
-    // 로그인 상태를 업데이트하는 로직이 필요할 수 있습니다.
-  }, []);
+  // useEffect(() => {
+  //   // 컴포넌트가 마운트될 때 로그인 상태 확인
+  //   const token = getToken(); // auth.js에서 토큰 가져오기
+  //   // isLoggedIn은 상태 값이므로 직접 호출하지 않고 사용
+  //   // 로그인 상태를 업데이트하는 로직이 필요할 수 있습니다.
+  // }, []);
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
