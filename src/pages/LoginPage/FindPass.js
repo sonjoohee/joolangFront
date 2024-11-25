@@ -26,7 +26,7 @@ const FindPass = () => {
 
         if (response.status === 200) {
             // 가입된 회원인 경우 이메일 인증 페이지로 이동
-            navigate('/email-verify', { state: { userId } });
+            navigate('/email-verify', { state: { userId , type : 'password' } });
         }
     } catch (error) {
         let errorMessage;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const EmailVerify = () => {
+const EmailVerify = ({type}) => {
   const location = useLocation();
   const { userId } = location.state || {}; // FindPass에서 전달된 userId
   const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ const EmailVerify = () => {
   const handleVerifyEmail = async () => {
     const Data = JSON.stringify({
       email: `${email}@${com}`, // 이메일 형식으로 결합
-      type: 'password', // 요청 타입
+      type,// 요청 타입
       userId // userId 추가
     });
 

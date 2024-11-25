@@ -22,7 +22,7 @@ const FindID = () => {
         if (response.status === 200) {
             // 사용자 인증 성공
             // setMessage('사용자 인증이 완료되었습니다. 이메일 인증 페이지로 이동합니다.');
-            navigate('/email-verify', { state: { email } }); // 이메일 인증 페이지로 이동
+            navigate('/email-verify', { state: { email, type: 'userId' } }); // 이메일 인증 페이지로 이동
           }
         } catch (error) {
           console.error('사용자 인증 실패:', error);

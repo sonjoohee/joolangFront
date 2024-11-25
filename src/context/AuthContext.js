@@ -36,6 +36,8 @@ export const AuthProvider = ({ children }) => {
         saveToken(token); // 로컬 스토리지에 JWT 저장
         localStorage.setItem('user', JSON.stringify(userData)); // 사용자 정보 저장
         setIsLoggedIn(true); // 로그인 상태 업데이트
+
+        return response;
       }
     } catch (error) {
       console.error('로그인 실패:', error);
